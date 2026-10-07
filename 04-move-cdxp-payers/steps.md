@@ -1,4 +1,4 @@
-# 5. Move CDXP's bulk payers
+# 4. Move CDXP's bulk payers
 
 [Back to the one-page plan](../one-page.md)
 

@@ -2,6 +2,13 @@
 
 A working plan for moving Collaborate's per-customer TRX databases and CDXP's per-payer bulk tables into one set of shared, tenant-partitioned tables in CDXP's Azure SQL database.
 
+**The approach:**
+
+- Both teams design the shared data model together.
+- CDXP builds it, mostly in its own codebase and release flow.
+- Collaborate then cuts over to it, one customer at a time.
+- Collaborate stays involved in every decision.
+
 ## How it's organized
 
 There are three levels, each more detailed than the last:
@@ -20,7 +27,7 @@ CDXPC8IntegrationPlan/
       baseline-trx.md
       ...
   02-decide-and-design/
-  03-build-and-release-together/
+  03-build-foundation/
   ...
   10-converge-filtering/
 ```

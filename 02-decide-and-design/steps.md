@@ -2,7 +2,7 @@
 
 [Back to the one-page plan](../one-page.md)
 
-The big decisions made, including ingestion restrictions, and one data model both teams agree to build.
+Both teams meet and design the shared data model, and make the big decisions, including ingestion restrictions.
 
 ## Direction
 
@@ -37,6 +37,6 @@ The big decisions made, including ingestion restrictions, and one data model bot
 
 ## Proofs
 
-- [ ] [Run the proof-of-concept spikes](notes/spikes.md) (C8 24 + CDXP 32 dev h)
+- [ ] [Run the proof-of-concept spikes](notes/spikes.md) (C8 8 + CDXP 48 dev h)
 
-**Phase total:** C8 30 dev h, 84 decision h | CDXP 38 dev h, 79 decision h
+**Phase total:** C8 14 dev h, 84 decision h | CDXP 54 dev h, 79 decision h

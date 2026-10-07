@@ -2,6 +2,7 @@
 
 [Back to steps](../steps.md)
 
+- **Who:** CDXP ports them into the `cdxp` database project, and Collaborate checks the logic.
 - Scope every statement to one tenant, following CIEP's four rules.
 - Replace the 11 Portal references, and the three-part names in Emblem's post-deployment scripts.
 - Re-check SQL Server 2016-era syntax at Azure SQL's compatibility level 150.

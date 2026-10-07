@@ -9,4 +9,4 @@
 - **Trade-offs:**
   - B decouples the releases best. But it turns Collaborate's EF Core and Dapper data access into HTTP calls, and someone has to run the service.
   - A is fastest, but ties both release cycles to one schema.
-- **Lean:** C for the migration. Revisit an API after the pilot.
+- **Lean:** A, with CDXP owning the contract. Collaborate's app reads and writes through CDXP-owned procedures and views. Revisit an API after the pilot.

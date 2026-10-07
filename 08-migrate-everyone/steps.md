@@ -1,4 +1,4 @@
-# 8. Migrate everyone else
+# 8. Cut over everyone else
 
 [Back to the one-page plan](../one-page.md)
 

@@ -3,6 +3,7 @@
 [Back to steps](../steps.md)
 
 - **What:** four shared tables in `cdxp`, each keyed by tenant first.
+- **Who builds it:** CDXP, in its codebase and pipeline. Both teams design it, and Collaborate reviews it.
 - **Full draft:** [shared-data-model-sql.md](shared-data-model-sql.md) (pseudo-SQL, plus the questions about simplifying it).
 - **Built from:** Collaborate's `alert` tables after the master-record removal, and CDXP's per-payer tables.
 - **The tables:**
