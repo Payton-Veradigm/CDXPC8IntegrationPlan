@@ -13,7 +13,7 @@ Estimates are effort per team, in dev hours (LLM-assisted) and decision hours. S
 4. **[Move CDXP's bulk payers](04-move-cdxp-payers/steps.md)**: CDXP's bulk payers (all but Humana) on the consolidated tables, and their per-payer tables retired. Runs alongside phase 5.
    - C8 0 dev h, 1 decision h | CDXP 220 dev h, 3 decision h
 5. **[Cut in Collaborate payers and verify against TRX](05-cut-in-and-verify/steps.md)**: Collaborate's payers flow through CDXP's process one at a time, side by side with TRX, until the data matches. Includes multi-headed OTB and the ANR feed with RAA.
-   - C8 64 dev h, 19 decision h | CDXP 388 dev h, 19 decision h
+   - C8 64 dev h, 20 decision h | CDXP 388 dev h, 20 decision h
 6. **[Agree how we build and release together](06-build-and-release-together/steps.md)**: one way of working before the Portal and PFA depend on the new source. Runs alongside phase 5.
    - C8 12 dev h, 31 decision h | CDXP 20 dev h, 31 decision h
 7. **[Move the Portal and PFA to the new source](07-move-portal-and-pfa/steps.md)**: once a customer's data matches, Collaborate points the Portal and PFA at the shared tables, one customer at a time. The point of care and soft closure move with it.
@@ -23,7 +23,7 @@ Estimates are effort per team, in dev hours (LLM-assisted) and decision hours. S
 9. **[Retire the old pieces](09-retire/steps.md)**: TRX databases archived, old code removed, and VM capacity released.
    - Merged team 74 dev h, 2 decision h
 
-**Totals:** C8 400 dev h, 159 decision h | CDXP 1140 dev h, 158 decision h | Merged team 106 dev h, 4 decision h
+**Totals:** C8 400 dev h, 160 decision h | CDXP 1140 dev h, 159 decision h | Merged team 106 dev h, 4 decision h
 
 **In work days (8 hours each):** C8 about 50 dev days and 20 decision days | CDXP about 143 dev days and 20 decision days | Merged team about 13 dev days and half a decision day. About 246 work days in all.
 

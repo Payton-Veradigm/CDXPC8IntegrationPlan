@@ -25,6 +25,6 @@ Collaborate's payers flow through CDXP's process into the shared tables, one at 
 
 - [ ] [Cut in the first payer and run a full cycle side by side](notes/first-cut-in.md) (C8 8 + CDXP 24 dev h)
 - [ ] [Cut in the remaining payers](notes/remaining-cut-ins.md) (C8 16 + CDXP 64 dev h)
-- [ ] [Sign off parity for each payer](notes/parity-sign-off.md) (Both, 8 decision h each)
+- [ ] [Sign off parity for each payer](notes/parity-sign-off.md) (Both, 9 decision h each)
 
-**Phase total:** C8 64 dev h, 19 decision h | CDXP 388 dev h, 19 decision h
+**Phase total:** C8 64 dev h, 20 decision h | CDXP 388 dev h, 20 decision h
