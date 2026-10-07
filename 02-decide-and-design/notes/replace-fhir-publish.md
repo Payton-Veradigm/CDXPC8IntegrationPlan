@@ -8,4 +8,4 @@
   - What replaces expire-by-absence and the 20% guard.
   - How the PCP-based publish scope applies.
   - Whether visibility is stored on each gap, or derived from the gap's state plus the latest signed-off publish.
-- **Why now:** the data model needs the fields. The switch itself happens in [phase 8](../../08-turn-off-old-paths/steps.md).
+- **Why now:** the data model needs the fields. The switch happens with each customer's Portal and PFA move ([phase 7](../../07-move-portal-and-pfa/steps.md)).

@@ -3,7 +3,7 @@
 [Back to steps](../steps.md)
 
 - **Proposal:**
-  - **Business key:** tenant, member, detail code, detail type, and program year. This is the live-gap rule from the master-record removal, plus the tenant.
+  - **Business key:** tenant, member, detail code, detail type, and program year. This is the live-gap rule on Collaborate's gap-centric branch (`jk/pfa-refactor`), plus the tenant.
   - **Platform gap ID:** one `BIGINT` ID that both products use and send to partners.
   - **Payer's gap ID:** kept as an attribute, widened from Collaborate's 60 characters to CDXP's 150.
   - **Soft closure:** looks up by the platform ID or the payer's gap ID only.

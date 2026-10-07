@@ -14,5 +14,5 @@
   - Retire it.
 - **Lean:**
   - Copy the reference data and rules.
-  - Retire the FHIR Publish rules once the old paths turn off (phase 8).
+  - Retire the FHIR Publish rules once FHIR Publish stops, as customers move (phase 7).
   - Decide the permission and roster data with Security.

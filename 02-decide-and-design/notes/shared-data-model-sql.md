@@ -3,7 +3,7 @@
 [Back to the data model notes](shared-data-model.md)
 
 - This is pseudo-SQL for discussion. The names, types, and indexes are proposals.
-- Built from Collaborate's `alert` tables on the master-record removal branch (`jk/pfa-refactor`, `c6e9e3bf8`) and CDXP's per-payer tables on `DevBranch` (`c67a2d4d`).
+- Built from Collaborate's `alert` tables on branch `jk/pfa-refactor` (`c6e9e3bf8`) and CDXP's per-payer tables on `DevBranch` (`c67a2d4d`).
 - `[both]`, `[C8]`, and `[CDXP]` mark which product needs a column.
 - `PHI(type)` marks a column holding PHI. Its storage depends on [the PHI decision](phi-model.md).
 - `(S#)` points to a simplification question at the end of this page.
@@ -58,7 +58,7 @@ CREATE TABLE cdxp.BulkPayerMember (
     -- Attribution and status
     PcpProviderKey         BIGINT            NULL,      -- [C8]   alert.Member.PCPId, resolved to BulkPayerProvider (S9)
     IsTermed               BIT               NULL,      -- [C8]
-    IsDeceased             BIT               NOT NULL DEFAULT 0,  -- [C8] added by the master-record removal
+    IsDeceased             BIT               NOT NULL DEFAULT 0,  -- [C8] new on the gap-centric branch
     DeceasedDate           DATE              NULL,      -- [C8]
     MemberProperties       NVARCHAR(MAX)     NULL CHECK (ISJSON(MemberProperties) = 1),
                                                         -- [C8]   groups, settlement entity, risk contract, AWV, PBP, market... (S6)
@@ -182,7 +182,7 @@ CREATE TABLE cdxp.BulkPayerGap (
         REFERENCES cdxp.BulkPayerMember (PayerPartitionKey, MemberKey)
 ) ON psBulkPayer (PayerPartitionKey);
 
--- One live gap per identity: the master-record removal's live-gap rule, scoped to the tenant (S12, S13)
+-- One live gap per identity: the gap-centric branch's live-gap rule, scoped to the tenant (S12, S13)
 CREATE UNIQUE INDEX UX_BulkPayerGap_LiveGap
     ON cdxp.BulkPayerGap (PayerPartitionKey, MemberKey, DetailCode, DetailTypeId, ProgramYear)
     WHERE IsInSource = 1 AND IsExpired = 0;

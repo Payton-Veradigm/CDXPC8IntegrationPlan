@@ -9,4 +9,4 @@
 - **Decide:**
   - Recovery point and recovery time targets for both products.
   - `cdxp`'s geo-DR setup.
-- **Then:** build and rehearse the restore, export, and delete tooling before the first real customer moves.
+- **Then:** [build the restore, export, and delete tooling](restore-and-delete-tooling.md), and rehearse it before the first Collaborate payer is cut in.

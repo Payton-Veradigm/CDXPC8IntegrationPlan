@@ -4,5 +4,5 @@
 
 - Any remaining per-payer tables and procedures. Humana's stay.
 - `C8BulkController`, `C8BulkHandler`, and `C8PublishDetail`.
-- The OTB bridge tables, if OTB moved.
+- The old OTB and CORE heads that post to Collaborate.
 - The per-payer branches in `spSaveGapStatus`.

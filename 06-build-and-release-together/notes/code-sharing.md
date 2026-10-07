@@ -2,8 +2,12 @@
 
 [Back to steps](../steps.md)
 
-- **Direction:** the shared model is built mostly in CDXP's codebase and release flow, and Collaborate then cuts over to it.
-- **Lives in CDXP's codebase:** the shared tables, their procedures and views, the access contract, and the migration tooling.
-- **Stays in Collaborate's codebase:** the app's switch to the shared tables, its jobs, and its screens.
+- **Direction:** CDXP builds the shared model, and the process that takes in Collaborate's payers, in its own codebase and release flow. Collaborate then moves the Portal and PFA onto it.
+- **Lives in CDXP's codebase:**
+  - The shared tables, with their procedures and views.
+  - The access contract.
+  - The intake of Collaborate's payers, including Collaborate's filtering rules.
+  - The migration and comparison tooling.
+- **Stays in Collaborate's codebase:** the Portal and PFA's switch to the new source, their jobs, and their screens.
 - **Still to decide:** whether any C# code is shared, such as tenant context, data access, or models, or each side keeps its own.
 - **Lean:** share only the database project and the access contract, with no shared C# libraries at first.

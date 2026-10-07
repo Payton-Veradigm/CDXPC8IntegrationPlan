@@ -9,4 +9,4 @@
   - Document routing.
 - **For Collaborate to decide:** where practice enrollment and Core Services files (the `core` schema) go: the shared database or Portal.
 - **Retire or replace (lean):** the legacy Popul8 tables (`popul8`) and the operational `dbo` tables.
-- **Reporting** (the `report` and `snowflake` schemas): see [the reporting decision](../../08-migrate-everyone/notes/reporting-target.md).
+- **Reporting** (the `report` and `snowflake` schemas): see [the reporting decision](../../07-move-portal-and-pfa/notes/reporting-target.md).

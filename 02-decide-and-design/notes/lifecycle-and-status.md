@@ -3,7 +3,7 @@
 [Back to steps](../steps.md)
 
 - **Lean:** two separate dimensions.
-  - **Program lifecycle**, owned by the payer and Collaborate: in source, expired, responded, closed.
+  - **Program lifecycle:** in source and expired (set by ingestion), and responded and closed (set by PFA feedback).
   - **Delivery**, owned by CDXP: New, Sent, Viewed, Addressed, SentToPayer, FailedAtSentToPayer, Expired.
 - **Rules to write down:**
   - **Reopening.** Does a completed gap reopen when it comes back? The sources disagree. The Collaborate KB says completed alerts don't reopen on staging. Jason's proposal says Collaborate reopens returning gaps for feedback. CDXP's payer tables never reopen a closed gap.

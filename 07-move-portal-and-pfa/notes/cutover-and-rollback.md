@@ -2,7 +2,12 @@
 
 [Back to steps](../steps.md)
 
-- **Lean:** cut each customer over offline, inside the existing publish window. The PFA is already unavailable during publish.
-- Keep the TRX database read-only during the soak, so it's there for rollback.
-- Use live dual-writes only if a customer is too big for the window.
+- **Decided (2026-10-07, per Payton Obrycki):** a customer moves all at once. The Portal, PFA, point of care, and soft closure switch to the new source together, and FHIR Publish stops for that customer.
+- **Lean:** move each customer offline, inside the existing publish window. The PFA is already unavailable during publish.
+- **During the soak:** the old OTB and CORE heads and TRX's staging keep feeding TRX, so it stays current for rollback.
+- **To roll back:**
+  1. Flip the customer's switches back to TRX.
+  2. Turn FHIR Publish back on.
+  3. Copy any feedback written since the move back to TRX.
 - Rehearse the rollback before the first real customer moves.
+- **Still to decide:** how long the soak lasts, and who can call a rollback.

@@ -2,8 +2,9 @@
 
 [Back to steps](../steps.md)
 
-- **Lean:** one owner per column, and only the owner writes to it.
-  - **Collaborate:** gap content, program lifecycle, feedback, and documents.
-  - **CDXP:** delivery status, member-to-patient matches, validation drops, delivery back to payers, and payers that never reach Collaborate.
+- **Lean:** one owner per column, and only the owner's code writes to it.
+  - **CDXP's process:** gap content and the in-source and expired states from ingestion, delivery status, member-to-patient matches, validation drops, and delivery back to payers.
+  - **Collaborate's Portal and PFA:** feedback, documents, and admin configuration.
+- **Also decide:** who owns the lifecycle changes that come from feedback, such as responded and closed.
 - **How:** tag every column in the [data model](shared-data-model-sql.md) with its owner before anything is built.
-- **Source:** Jason's proposal, step 3.
+- **Source:** Jason's proposal, step 3, adjusted so that CDXP's process does the ingestion.

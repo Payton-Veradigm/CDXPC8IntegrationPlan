@@ -2,7 +2,7 @@
 
 [Back to the one-page plan](../one-page.md)
 
-CDXP's existing bulk payers (all but Humana) moved onto the consolidated tables, and their per-payer tables retired. This is CIEP's Payer Migration plan (#170100).
+CDXP's existing bulk payers (all but Humana) moved onto the consolidated tables, and their per-payer tables retired. This is CIEP's Payer Migration plan (#170100). Runs alongside phase 5.
 
 - [ ] [**Decide** when the C8-family payers move](notes/c8-family-timing.md) (C8 1 + CDXP 3 decision h)
 - [ ] [Migrate the first payer of each kind](notes/first-of-each-kind.md) (CDXP, 120 dev h)

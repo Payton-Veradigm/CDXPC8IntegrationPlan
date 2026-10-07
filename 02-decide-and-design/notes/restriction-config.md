@@ -9,4 +9,7 @@
   - Where each kind of restriction is configured once the products merge.
   - Who can change it: admins, payer users, or the CDXP team.
   - Whether a change needs review before it takes effect.
-- **Lean:** keep each product's configuration where it is for the merge. Move both onto one tenant-keyed screen later.
+- **Lean:**
+  - Collaborate's settings move into `cdxp`, keyed by tenant, because CDXP's process reads them.
+  - Until the Portal's admin screens move (phase 7), copy changes over from TRX, so both sides filter with the same rules.
+  - CDXP's model settings stay where they are. Put both on one tenant-keyed screen later.

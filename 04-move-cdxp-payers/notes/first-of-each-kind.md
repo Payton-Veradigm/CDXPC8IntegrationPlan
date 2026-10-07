@@ -3,6 +3,7 @@
 [Back to steps](../steps.md)
 
 - IHC, Xanthus, and Inovalon go first, and carry the learning cost for their kind.
+- Xanthus leads the C8-family kind. It moves here only under option A of [the C8-family decision](c8-family-timing.md), which these hours assume.
 - **For each one:**
   1. Author the payer's map.
   2. Run a recent file through the old path and the new one, and reconcile the results.

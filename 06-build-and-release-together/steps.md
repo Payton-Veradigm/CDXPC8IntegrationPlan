@@ -1,8 +1,8 @@
-# 5. Agree how we build and release together
+# 6. Agree how we build and release together
 
 [Back to the one-page plan](../one-page.md)
 
-One way of working before Collaborate's code depends on the shared model. Runs alongside phase 4, and finishes before phase 6.
+One way of working before the Portal and PFA depend on the new source. Runs alongside phase 5, and finishes before phase 7.
 
 - [ ] [Map both teams' current processes side by side](notes/current-sdlcs.md) (C8 4 + CDXP 4 dev h)
 - [ ] [**Decide** what code and schema the teams share](notes/code-sharing.md) (Both, 3 decision h each)
