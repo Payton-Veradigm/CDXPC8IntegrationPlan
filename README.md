@@ -20,10 +20,13 @@ There are three levels, each more detailed than the last:
 2. **`<phase>/steps.md`** is a checklist for that phase. Each line is one thing that has to happen, or one decision that has to be made.
 3. **`<phase>/notes/*.md`** has one file per step, with bullet-point notes: why it matters, what we know, the options, and the open questions.
 
+Next to the one-page, **[timeline.md](timeline.md)** turns the hours into calendar weeks for 2 or 3 devs per team, with the phases overlapped.
+
 ```text
 CDXPC8IntegrationPlan/
   README.md
   one-page.md
+  timeline.md
   01-prerequisites/
     steps.md
     notes/
@@ -54,7 +57,7 @@ CDXPC8IntegrationPlan/
 - **Dev hours** are hands-on work: building, porting, testing, and tooling. They assume LLM-assisted development.
 - **Decision hours** are analysis, meetings, write-ups, and sign-off. LLM assistance doesn't shrink these.
 - Both are people-hours for the C8 and CDXP teams. Time from other groups isn't counted.
-- Hours measure effort, not calendar time. Sign-offs, side-by-side cycles, and soaks add calendar time on top.
+- Hours measure effort, not calendar time. Sign-offs, side-by-side cycles, and soaks add calendar time on top, and [timeline.md](timeline.md) includes them.
 - About 40 hours is one person-week.
 - The CDXP team's spec builder, ingestor, and consolidated tables are its own project. This plan depends on them but doesn't count their hours.
 - All the numbers are starting guesses. Replace them as each team sizes its work, and keep the phase totals and `one-page.md` in sync.
@@ -62,6 +65,7 @@ CDXPC8IntegrationPlan/
 ## Editing rules
 
 - Keep `one-page.md` to one printed page. If it grows, push the detail down a level.
+- When the hours or the waits change a lot, update `timeline.md` and the one-page's calendar line.
 - One step per line in `steps.md`. Anything that needs explaining goes in the step's notes file.
 - Notes are bullets, not prose.
 - When a decision is made, record it in its notes file under **Decided**: what was decided, when, and by whom.

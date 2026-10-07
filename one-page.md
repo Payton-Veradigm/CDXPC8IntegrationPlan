@@ -27,6 +27,8 @@ Estimates are effort per team, in dev hours (LLM-assisted) and decision hours. S
 
 **In work days (8 hours each):** C8 about 50 dev days and 20 decision days | CDXP about 143 dev days and 20 decision days | Merged team about 13 dev days and half a decision day. About 246 work days in all.
 
+**Calendar, with phases overlapped:** about 43 weeks with 3 devs per team, or 46 with 2 (roughly 10 to 11 months). Waiting on decisions, monthly side-by-side cycles, and soaks sets most of it. See [the timeline](timeline.md).
+
 **Not in the hours:**
 - The CDXP team's own project.
 - Calendar time for sign-offs, side-by-side cycles, and soaks.
