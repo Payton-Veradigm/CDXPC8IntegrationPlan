@@ -2,12 +2,13 @@
 
 [Back to steps](../steps.md)
 
-- **Why:** Jason's proposal has CDXP rebuild Collaborate's staging and filtering pipeline before Collaborate moves. That puts the hardest piece on the critical path: matching today's filter rules exactly.
-- **Options:**
-  - A. Pipeline first, in Jason's order.
-  - B. Data first. Collaborate's staging keeps running, pointed at the shared tables. Rebuilding the pipeline becomes a separate, optional project ([phase 10](../../10-converge-filtering/steps.md)).
-- **Lean:** B. We get one store, no round trips, and no TRX VMs without rewriting the filter engine.
-- **Cost of B:**
-  - Collaborate's stored procedures have to be ported to `cdxp`.
-  - Two ingest engines run side by side for a while.
-- **Needs:** agreement with Jason.
+- **Decided (2026-10-07, per Payton Obrycki):** pipeline first, in CDXP. The plan runs in three stages:
+  1. Collaborate's payers are cut into CDXP's process.
+  2. They're checked side by side against TRX until the data matches.
+  3. Then the Portal and PFA move to the new source.
+- **Options considered:**
+  - A. Pipeline first (Jason's proposal): CDXP replaces Collaborate's staging and publish.
+  - B. Data first: Collaborate's staging keeps running, pointed at the shared tables.
+- **What it means:**
+  - Collaborate's filtering rules get rebuilt in CDXP's process ([phase 5](../../05-cut-in-and-verify/steps.md)).
+  - TRX stays the source for the Portal and PFA until each customer moves.

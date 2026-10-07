@@ -4,6 +4,7 @@
 
 - **Why:** the tenant key needs one entry per customer or payer, and names don't match across the products.
 - **Join today:** Collaborate's `VeradigmPayerId` equals CDXP's `GlobalPayerID`.
+- **Main job:** agree the final list of customers and payers. The IDs already join, so this takes about an hour per team.
 - **Name mismatches (Collaborate / CDXP):**
   - BCBSMichigan / BCBSMI.
   - CommunityCareOK / CCOK.

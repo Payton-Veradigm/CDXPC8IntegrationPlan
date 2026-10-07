@@ -1,8 +1,8 @@
-# Replace TRX's reads of the Portal database
+# Copy the Portal data that CDXP's process needs
 
 [Back to steps](../steps.md)
 
-- Carry out [the Portal decision](../../02-decide-and-design/notes/portal-dependencies.md), object by object.
-- **Reference data:** a sync job copies the Portal tables into `cdxp`. Collaborate already chose copying over cross-database reads once, in its CDXP integration.
-- **FHIR Publish objects:** skip them. They retire in phase 7.
-- **Permission and roster data:** as agreed with Security.
+- Carry out [the Portal data decision](../../02-decide-and-design/notes/portal-dependencies.md), item by item.
+- **Reference data and rules:** a sync job copies the Portal tables into `cdxp`. Collaborate has chosen copying over cross-database reads before, in its CDXP integration.
+- **FHIR Publish rules:** skip them. They retire when the old paths turn off (phase 8).
+- **Permission and roster data:** handle as agreed with Security.

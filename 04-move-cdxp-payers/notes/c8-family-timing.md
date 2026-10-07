@@ -2,9 +2,9 @@
 
 [Back to steps](../steps.md)
 
-- **The C8 family:** BCBSMI, BCBSHorizon, CCOK, Christus, Admirian, and Xanthus. They get their gaps only from Collaborate.
-- **CIEP's plan:** only the parsing of Collaborate's publish moves. OTB stays as it is.
+- **The C8 family:** BCBSMI, BCBSHorizon, CCOK, Christus, Admirian, and Xanthus. CDXP gets their gaps from Collaborate's FHIR Publish today.
+- **The overlap:** these customers are also Collaborate payers, so their gaps will also arrive through the cut-in ([phase 5](../../05-cut-in-and-verify/steps.md)). Two copies of the same gap would collide in the shared tables.
 - **Options:**
-  - A. Move them as planned, then fold their rows into Collaborate's rows later.
-  - B. Wait until Collaborate writes to the shared tables directly (phase 7).
-- **Lean:** A, but only if the shared rows carry the platform gap ID and Collaborate's own IDs. Then the later fold is an update, not a second migration. Otherwise, B.
+  - A. Move their FHIR Publish parse onto the consolidated tables as CIEP planned, then fold those rows into the cut-in rows.
+  - B. Don't move the FHIR Publish parse. Their gaps come in through the cut-in, and their per-payer tables retire when the old paths turn off (phase 8).
+- **Lean:** B, so each gap lands in the shared tables only once.

@@ -1,20 +1,18 @@
-# Decide what happens to TRX's reads of the Portal database
+# Decide how CDXP's process gets the Portal data it needs
 
 [Back to steps](../steps.md)
 
-- **Why:** 11 TRX objects and one post-deployment script read the Portal database directly, and Azure SQL can't query across databases.
-- **What they read:**
-  - FHIR Publish rules and batches.
+- **Why:** TRX's staging and publish read data from the Portal database. Once CDXP's process does the staging, it needs the same inputs.
+- **What TRX reads from Portal today:**
+  - FHIR Publish rules (gap inclusion and NPI exclusion).
   - The member and provider rosters, and the customer table.
-  - Reference data: LOBs, coding models, sensitive diagnoses, the ICD crosswalk, zip codes, visible content, and `VeradigmClient`.
-  - SSO permission mappings and user permissions.
-- **Options, per object:**
-  - Copy the Portal table into `cdxp`.
-  - Move the table into `cdxp`.
-  - Pass the data in from the app.
-  - Retire the object.
+  - Reference data: LOBs, coding models, sensitive diagnoses, and the ICD crosswalk.
+  - SSO permission mappings, which are used to build access.
+- **Options, per item:**
+  - Copy it into `cdxp` with a sync job.
+  - Read it through an API.
+  - Retire it.
 - **Lean:**
-  - Retire the FHIR Publish objects instead of porting them. Phase 7 removes them, and a Collaborate-only pilot doesn't need them.
-  - Copy the reference data.
+  - Copy the reference data and rules.
+  - Retire the FHIR Publish rules once the old paths turn off (phase 8).
   - Decide the permission and roster data with Security.
-- **Also decide:** whether Portal stays on the VMs. The lean is yes, for now.

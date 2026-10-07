@@ -7,7 +7,5 @@
 - An owner for every **Decide** step in this plan.
 - Decisions are logged in their notes files: what was decided, when, and by whom.
 - A regular joint meeting while decisions are open. Weekly is a good starting point.
-- **Team project leads:**
-  - Jason Kallelis: the master-record removal.
-  - Brian Fontana: the spec builder, ingestor, and consolidated tables.
-- **Watch out:** the same few people lead the team projects and own most of the decisions here.
+- **Already leading a piece:** Brian Fontana, the CDXP team's spec builder, ingestor, and consolidated tables (CIEP #170061).
+- **Watch out:** the same few people lead the CDXP team's project and own most of the decisions here.

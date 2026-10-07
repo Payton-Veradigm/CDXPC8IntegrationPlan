@@ -1,12 +1,12 @@
-# Decide how each product reaches the data
+# Decide how the Portal and PFA will reach the data
 
 [Back to steps](../steps.md)
 
 - **Options:**
-  - A. Direct SQL, through a contract of views and stored procedures.
+  - A. Direct SQL, through a contract of CDXP-owned views and stored procedures.
   - B. A shared service API for all reads and writes. This is Jason's proposal.
-  - C. Hybrid. Each product reads and writes its own tables directly. Anything that crosses ownership goes through a procedure or an API.
+  - C. Hybrid: direct reads of some tables, with procedures or an API for anything that crosses ownership.
 - **Trade-offs:**
-  - B decouples the releases best. But it turns Collaborate's EF Core and Dapper data access into HTTP calls, and someone has to run the service.
-  - A is fastest, but ties both release cycles to one schema.
-- **Lean:** A, with CDXP owning the contract. Collaborate's app reads and writes through CDXP-owned procedures and views. Revisit an API after the pilot.
+  - B decouples releases best. But it turns the PFA's EF Core and Dapper data access into HTTP calls, and someone has to run the service.
+  - A is fastest, but ties the Portal's releases to the shared schema.
+- **Lean:** A, with CDXP owning the contract. Revisit an API after the first customers move.

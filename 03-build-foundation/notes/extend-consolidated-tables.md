@@ -1,9 +1,9 @@
-# Extend the consolidated tables for Collaborate
+# Implement the shared data model in the consolidated tables
 
 [Back to steps](../steps.md)
 
 - Start from the consolidated `BulkPayer*` tables, which the CDXP team builds in its own project.
-- **Add what Collaborate needs:**
+- **Add what [the shared data model](../../02-decide-and-design/notes/shared-data-model.md) needs:**
   - The live-gap identity.
   - Lifecycle and feedback columns.
   - Extension tables that each product owns.
@@ -14,4 +14,4 @@
   2. Use `OPTION (RECOMPILE)` where tenant sizes vary.
   3. Delete in batches.
   4. Make additive changes only.
-- **Starting point:** [the data model draft](../../02-decide-and-design/notes/shared-data-model-sql.md).
+- **Collaborate's part:** review the tables against what the PFA needs.
