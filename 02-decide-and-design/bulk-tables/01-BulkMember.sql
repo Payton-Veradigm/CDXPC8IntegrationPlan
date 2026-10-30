@@ -1,0 +1,96 @@
+/*
+    cdxp.BulkMember: one row per payer member.
+
+    Base:    cdxp.HPPMember (CDXP).
+    Laid in: every column of alert.Member (C8), marked FROM C8. A column both products have appears once.
+
+    Pseudo-code: no constraints or indexes. Every Bulk* table is partitioned on PayerPartitionKey (00-PayerPartition.sql).
+    PHI is shown as CDXP stores it (encrypted VARBINARY), pending the PHI decision (notes/phi-model.md). The comment gives C8's plain type.
+    Not carried: alert.Member.MemberName, a computed "LastName, FirstName". Build it on read.
+*/
+
+CREATE TABLE [cdxp].[BulkMember] (
+	-- Keys and partition
+	[PayerPartitionKey]           SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
+	[MemberKey]                   BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.HPPMember.MemberKey
+	[AlertMemberId]               UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.AlertMemberId (TRX PK; FHIR Patient.Id)
+	[LineOfBusinessKey]           TINYINT           NULL,             -- FROM C8 alert.Member.LOB VARCHAR(10), mapped to cdxp.LineOfBusiness; CDXP keeps LOB on the gap only
+
+	-- Member identifiers (PHI)
+	[MemberID]                    VARBINARY(256)    NOT NULL,         -- FROM CDXP cdxp.HPPMember.MemberID; FROM C8 alert.Member.MemberId VARCHAR(50)
+	[UniqueMemberID]              VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.UniqueMemberID (NOT NULL in HPP; C8 has no equivalent)
+	[PlanMemberId]                VARBINARY(256)    NULL,             -- FROM C8 alert.Member.PlanMemberId VARCHAR(50); HPP's file sends both UNIQUE_MEMBER_ID and PLAN_MEMBER_ID
+	[MRN]                         VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.MRN; FROM C8 alert.Member.MRN VARCHAR(50)
+	[GovernmentId]                VARBINARY(256)    NULL,             -- FROM C8 alert.Member.Government_ID VARCHAR(100)
+
+	-- Demographics (PHI)
+	[LastName]                    VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.LastName; FROM C8 alert.Member.LastName NVARCHAR(45)
+	[FirstName]                   VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.FirstName; FROM C8 alert.Member.FirstName NVARCHAR(45)
+	[DateOfBirth]                 VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.DateOfBirth; FROM C8 alert.Member.DOB DATE
+	[Gender]                      VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.Gender; FROM C8 alert.Member.Gender VARCHAR(1)
+	[Zip5]                        VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.Zip5; FROM C8 alert.Member.ZipCode VARCHAR(10) (C8 keeps ZIP+4)
+	[Address]                     VARBINARY(256)    NULL,             -- FROM C8 alert.Member.Address NVARCHAR(45)
+	[City]                        VARBINARY(256)    NULL,             -- FROM C8 alert.Member.City NVARCHAR(45)
+	[State]                       NVARCHAR(2)       NULL,             -- FROM C8 alert.Member.State
+	[Phone]                       VARBINARY(256)    NULL,             -- FROM C8 alert.Member.Phone NVARCHAR(25)
+
+	-- Matching (CDXP)
+	[LNameDOBHash]                BIGINT            NULL,             -- FROM CDXP cdxp.HPPMember.LNameDOBHash
+	[RowKey]                      BIGINT            NOT NULL,         -- FROM CDXP cdxp.HPPMember.RowKey
+
+	-- PCP attribution and visits
+	[PCPId]                       VARCHAR(100)      NULL,             -- FROM C8 alert.Member.PCPId (NOT NULL in C8); the payer's provider ID, see BulkProvider.PayerProviderId
+	[PCPLastVisitDate]            VARCHAR(20)       NULL,             -- FROM C8 alert.Member.PCPLastVisitDate
+	[PCPAttribLastVisitDate]      VARCHAR(10)       NULL,             -- FROM C8 alert.Member.PCPAttribLastVisitDate
+	[MaMaxPCPAttribLastVisitDate] VARCHAR(10)       NULL,             -- FROM C8 alert.Member.MaMaxPCPAttribLastVisitDate
+	[PCPAttribNumVisits]          INT               NULL,             -- FROM C8 alert.Member.PCPAttribNumVisits
+	[AWV_Last_Date]               DATE              NULL,             -- FROM C8 alert.Member.AWV_Last_Date
+	[AWV_ProviderID]              VARCHAR(100)      NULL,             -- FROM C8 alert.Member.AWV_ProviderID
+	[Preventive_LastDate]         DATE              NULL,             -- FROM C8 alert.Member.Preventive_LastDate
+	[Preventive_ProviderID]       VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Preventive_ProviderID
+
+	-- Plan and enrollment
+	[IsTermed]                    BIT               NULL,             -- FROM C8 alert.Member.IsTermed
+	[MetalLevel]                  VARCHAR(45)       NULL,             -- FROM C8 alert.Member.MetalLevel
+	[PBP]                         VARCHAR(3)        NULL,             -- FROM C8 alert.Member.PBP
+	[Market]                      VARCHAR(50)       NULL,             -- FROM C8 alert.Member.Market
+	[PlanAttribute1]              NVARCHAR(100)     NULL,             -- FROM C8 alert.Member.PlanAttribute1
+	[PlanAttribute2]              NVARCHAR(100)     NULL,             -- FROM C8 alert.Member.PlanAttribute2
+	[PlanAttribute3]              NVARCHAR(100)     NULL,             -- FROM C8 alert.Member.PlanAttribute3
+	[ModelDetail]                 VARCHAR(45)       NULL,             -- FROM C8 alert.Member.ModelDetail
+
+	-- Org hierarchy and contracts (drive C8 access mapping and reports)
+	[GroupID]                     VARCHAR(100)      NULL,             -- FROM C8 alert.Member.GroupID
+	[GroupName]                   VARCHAR(150)      NULL,             -- FROM C8 alert.Member.GroupName
+	[SuperGroupID]                VARCHAR(100)      NULL,             -- FROM C8 alert.Member.SuperGroupID
+	[SuperGroupName]              VARCHAR(150)      NULL,             -- FROM C8 alert.Member.SuperGroupName
+	[MedCenter]                   VARCHAR(100)      NULL,             -- FROM C8 alert.Member.MedCenter
+	[MedCenterDesc]               VARCHAR(150)      NULL,             -- FROM C8 alert.Member.MedCenterDesc
+	[SettlementEntityID]          VARCHAR(100)      NULL,             -- FROM C8 alert.Member.SettlementEntityID
+	[SettlementEntityName]        VARCHAR(150)      NULL,             -- FROM C8 alert.Member.SettlementEntityName
+	[GroupAttribOption]           VARCHAR(200)      NULL,             -- FROM C8 alert.Member.GroupAttribOption
+	[Risk_Contract_ID]            VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_ID
+	[Risk_Contract_Group]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Group
+	[Risk_Contract_Class]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Class
+
+	-- Risk metrics
+	[LastPMRRDate]                DATETIME2         NULL,             -- FROM C8 alert.Member.LastPMRRDate
+	[TotalPARAFImpact]            DECIMAL(10, 3)    NULL,             -- FROM C8 alert.Member.TotalPARAFImpact
+
+	-- Crosswalks (C8's manual ID corrections; keep only if alert.ApplyMemberCrosswalk / ApplyProviderCrosswalk are still run)
+	[MemberCrosswalkId]           UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.MemberCrosswalkId
+	[ProviderCrosswalkId]         UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.ProviderCrosswalkId
+
+	-- Delivery (CDXP)
+	[PayerPathDeltaGapCount]      INT               NULL,             -- FROM CDXP cdxp.HPPMember.PayerPathDeltaGapCount
+
+	-- Load lineage
+	[FirstStagingRunId]           UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.FirstStagingRunId
+	[LastStagingRunId]            UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.LastStagingRunId
+
+	-- Audit
+	[InsertDate]                  DATETIME          NOT NULL,         -- FROM CDXP cdxp.HPPMember.InsertDate; FROM C8 alert.Member.CreateDate DATETIME2
+	[InsertedBy]                  NVARCHAR(128)     NOT NULL,         -- FROM CDXP cdxp.HPPMember.InsertedBy
+	[LastUpdated]                 DATETIME          NOT NULL,         -- FROM CDXP cdxp.HPPMember.LastUpdated; FROM C8 alert.Member.UpdateDate DATETIME2
+	[LastUpdatedBy]               NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.HPPMember.LastUpdatedBy
+);
