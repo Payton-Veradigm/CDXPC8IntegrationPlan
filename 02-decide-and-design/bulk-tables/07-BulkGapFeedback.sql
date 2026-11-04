@@ -42,18 +42,22 @@ CREATE TABLE [cdxp].[BulkGapFeedback] (
 
 	-- Where it came from
 	[FeedbackOrigin]           VARCHAR(50)       NOT NULL,      -- FROM C8 alert.FeedbackSource.FeedbackBrokerName via alert.Detail.FeedbackSourceId (PFA, CDXP, VIM Bulk)
-	[FeedbackSource]           VARCHAR(200)      NOT NULL,      -- FROM C8 alert.Detail.ExternalFeedbackSource / alert.ExternalSource.ExternalSourceName ('PFA' for PFA responses)
-	[FeedbackSourceId]         UNIQUEIDENTIFIER  NULL,          -- FROM C8 alert.Detail.FeedbackSourceId -> alert.FeedbackSource
-	[ExternalSourceId]         UNIQUEIDENTIFIER  NULL,          -- FROM C8 alert.Detail.ExternalSourceId -> alert.ExternalSource
-	[ExternalFeedbackSourceId] UNIQUEIDENTIFIER  NULL,          -- FROM C8 alert.Detail.ExternalFeedbackSourceId
+	-- EHR
+	[TargetAppKey]         UNIQUEIDENTIFIER  NULL,          -- FROM C8 alert.Detail.FeedbackSourceId -> alert.FeedbackSource
+	-- Add a value for PFA, records which front-end feedback came from
+
 
 	-- Who responded
-	[BulkProviderKey]       BIGINT            NULL,             -- NEW -> cdxp.BulkProvider; FROM CDXP cdxp.Gap.ProviderNPIKey; FROM C8 alert.Detail.FeedbackNpi VARCHAR(45) (resolved by NPI)
+	[RespondingProviderKey] BIGINT      NULL,             -- NEW -> cdxp.Provider; FROM CDXP cdxp.Gap.ProviderNPIKey; FROM C8 alert.Detail.FeedbackNpi VARCHAR(45) (resolved by NPI)  
+	-- Add FeedbackUserID
 	[FeedbackUser]          NVARCHAR(256)     NULL,             -- FROM C8 alert.Detail.UpdatedBy today (FeedbackUser on jk/pfa-refactor)
 	[FeedbackUserFullName]  NVARCHAR(256)     NULL,             -- NEW: the responder's full name, saved with the response; C8 keeps only the username
 
 	-- Content pointer
 	[FeedbackFileLocation]  VARCHAR(500)      NULL,             -- FROM CDXP cdxp.Gap.FeedbackFileLocation; goes away once content lives in SQL
+
+	-- State
+	[IsCurrent]             BIT               NOT NULL,         -- NEW: the latest response from this origin
 
 	-- Audit
 	[InsertDate]            DATETIME          NOT NULL,         -- NEW, CDXP audit pattern

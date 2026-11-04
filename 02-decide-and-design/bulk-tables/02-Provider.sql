@@ -1,40 +1,38 @@
 /*
-    cdxp.BulkProvider: the payer's provider records (PCPs, attributed providers, responders).
+    cdxp.PayerProvider: a payer's record of a provider, on top of cdxp.Provider. cdxp.Provider holds what's true of
+    the NPI everywhere (name, taxonomy classification); this table adds what the payer says about it.
 
-    Base:    cdxp.Provider as reshaped by PR 53441 (BrandonDev_ProviderNPI_Split_Release2, Brandon Schroeder),
-             which makes cdxp.Provider global: one row per NPI, with name and taxonomy classification.
-    Laid in: every column of alert.Provider (C8), marked FROM C8.
+    Base:    cdxp.Provider (CDXP), global since PR 53441: one row per NPI. Its columns aren't repeated here.
+    Laid in: the rest of alert.Provider (C8), marked FROM C8.
 
-    BulkProvider is payer-scoped and points at the global cdxp.Provider row through ProviderKey.
-    Open: keep the classification group here, or read it from cdxp.Provider and drop it.
+    One row per payer provider ID and LOB, C8's key for alert.Provider. One NPI can have several: C8 keeps a
+    provider's payer IDs apart, their TINs and groups can differ, and the access keys and Not Seen Here depend on it.
+    A payer that sends only NPIs has one row per NPI and LOB, with no PayerProviderId. ProviderKey is NULL when the
+    payer sent no NPI, since cdxp.Provider requires one.
+
+    Other tables tie to a provider by ProviderKey. Where C8 tells payer IDs apart (cdxp.BulkProviderGap and
+    cdxp.BulkMemberProviderStatus), they also carry PayerProviderId, which finds this row on the gap's or member's LOB.
 
     Pseudo-code: no constraints or indexes. Partitioned on PayerPartitionKey (00-PayerPartition.sql).
 */
 
-CREATE TABLE [cdxp].[BulkProvider] (
+CREATE TABLE [cdxp].[Provider] (
 	-- Keys and partition
 	[PayerPartitionKey]             SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
-	[BulkProviderKey]               BIGINT            IDENTITY(1, 1),   -- NEW, modeled on cdxp.Provider.ProviderKey
-	[ProviderKey]                   BIGINT            NULL,             -- NEW: the global cdxp.Provider row for this NPI; NULL when the payer sent no NPI
+	[ProviderKey]                   BIGINT            NULL,             -- NEW -> cdxp.Provider, which has the NPI, name and taxonomy classification; NULL when the payer sent no NPI
 	[LineOfBusinessKey]             TINYINT           NULL,             -- FROM C8 alert.Provider.LOB VARCHAR(10); part of C8's unique key (LOB, ProviderId), which finds the gap's provider
+	[PayerProviderId]               VARCHAR(100)      NULL,             -- FROM C8 alert.Provider.ProviderId (NOT NULL in C8); FROM CDXP bulk row.ProvId; alert.Member.PCPId points at it
 
 	-- Provider identifiers
-	[PayerProviderId]               VARCHAR(100)      NULL,             -- FROM C8 alert.Provider.ProviderId (NOT NULL in C8); alert.Member.PCPId points at it
-	[NPI]                           BIGINT            NULL,             -- FROM CDXP cdxp.Provider.NPI (NOT NULL there); FROM C8 alert.Provider.NPI VARCHAR(45)
 	[TIN]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN; FROM CDXP the V5.8 spec's TIN, recorded at ingestion
-	-- The PROVIDER_TIN access key (cdxp.BulkGapAccess) matches this TIN, one per provider record, so no separate TIN
-	-- table is needed. CDXP's site TIN (Provider -> ProviderSite -> Site -> SiteTin) is a different value.
+ 	-- CDXP's site TIN (Provider -> ProviderSite -> Site -> SiteTin) is a different value.
+	-- Need to discuss this
 
-	-- Name
-	[ProviderName]                  VARCHAR(255)      NULL,             -- FROM CDXP cdxp.Provider.ProviderName; C8 computes alert.Provider.ProviderName as "LastName, FirstName"
+	-- Name as the payer sent it; cdxp.Provider.ProviderName is the NPI's
 	[FirstName]                     NVARCHAR(45)      NULL,             -- FROM C8 alert.Provider.FirstName
 	[LastName]                      NVARCHAR(255)     NULL,             -- FROM C8 alert.Provider.LastName
 
-	-- Specialty and classification
-	[PracticeSpecialityTaxonomyKey] INT               NULL,             -- FROM CDXP cdxp.Provider.PracticeSpecialityTaxonomyKey
-	[IsPrimaryCare]                 BIT               NULL,             -- FROM CDXP cdxp.Provider.IsPrimaryCare
-	[TaxonomyClassificationStatus]  VARCHAR(50)       NULL,             -- FROM CDXP cdxp.Provider.TaxonomyClassificationStatus
-	[LastClassifiedDate]            DATETIME          NULL,             -- FROM CDXP cdxp.Provider.LastClassifiedDate
+	-- Specialty as the payer sent it; cdxp.Provider has the taxonomy classification
 	[SpecCode]                      VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.SpecCode (payer's specialty code, not a taxonomy)
 	[SpecDesc]                      VARCHAR(100)      NULL,             -- FROM C8 alert.Provider.SpecDesc
 
@@ -70,8 +68,8 @@ CREATE TABLE [cdxp].[BulkProvider] (
 	[StagingRunId]                  UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Provider.StagingRunId
 
 	-- Audit
-	[InsertDate]                    DATETIME          NOT NULL,         -- FROM CDXP cdxp.Provider.InsertDate; FROM C8 alert.Provider.CreateDate DATETIME2
-	[InsertedBy]                    NVARCHAR(128)     NOT NULL,         -- FROM CDXP cdxp.Provider.InsertedBy
-	[LastUpdated]                   DATETIME          NOT NULL,         -- FROM CDXP cdxp.Provider.LastUpdated; FROM C8 alert.Provider.UpdateDate DATETIME2
-	[LastUpdatedBy]                 NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.Provider.LastUpdatedBy
+	[InsertDate]                    DATETIME          NOT NULL,         -- NEW, CDXP audit pattern; FROM C8 alert.Provider.CreateDate DATETIME2
+	[InsertedBy]                    NVARCHAR(128)     NOT NULL,         -- NEW, CDXP audit pattern
+	[LastUpdated]                   DATETIME          NOT NULL,         -- NEW, CDXP audit pattern; FROM C8 alert.Provider.UpdateDate DATETIME2
+	[LastUpdatedBy]                 NVARCHAR(128)     NOT NULL          -- NEW, CDXP audit pattern
 );

@@ -7,10 +7,10 @@
     Built: after each load, per tenant and LOB, replacing that LOB's rows, the way alert.BuildMapping runs after each
            publish. Every open gap (in source, not expired) with an Attributed provider in cdxp.BulkProviderGap gets
            one row per distinct value:
-             PROVIDER_ID          the provider's PayerProviderId
-             NPI                  its NPI
-             PROVIDER_TIN         its TIN
-             GROUP_ID             its group ID and group name
+             PROVIDER_ID          the Attributed row's PayerProviderId
+             NPI                  cdxp.Provider.NPI, through the row's ProviderKey
+             PROVIDER_TIN         the payer's record's TIN (cdxp.PayerProvider, on the gap's LOB and PayerProviderId)
+             GROUP_ID             that record's group ID and group name
              MED_CENTER           its med center
              RISK_CONTRACT_CLASS  its risk contract class
            When the member's GroupAttribOption is MemberDriven, the group, med center, and risk contract values come

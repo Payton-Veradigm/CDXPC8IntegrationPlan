@@ -1,7 +1,7 @@
 /*
     cdxp.BulkGapAuditLog: one row per change to a gap's status or lifecycle.
 
-    Base:    cdxp.HPPGapAuditLog (CDXP), which logs every GapStatusKey change.
+    Base:    CDXP's per-payer audit log, cdxp.<Payer>GapAuditLog, which logs every GapStatusKey change.
     Laid in: the alert.Detail lifecycle columns (C8) whose changes C8 tracks today in alert.DetailHistory (trigger tr_DetailHistory).
     Feedback history isn't logged here: every response is its own row in cdxp.BulkGapFeedback.
 
@@ -11,13 +11,13 @@
 CREATE TABLE [cdxp].[BulkGapAuditLog] (
 	-- Keys and partition
 	[PayerPartitionKey]     SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
-	[GapAuditLogKey]        BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.HPPGapAuditLog.GapAuditLogKey; FROM C8 alert.DetailHistory.DetailHistoryId
-	[GapKey]                BIGINT            NOT NULL,         -- FROM CDXP cdxp.HPPGapAuditLog.GapKey; FROM C8 alert.DetailHistory.DetailId
+	[GapAuditLogKey]        BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.<Payer>GapAuditLog.GapAuditLogKey; FROM C8 alert.DetailHistory.DetailHistoryId
+	[GapKey]                BIGINT            NOT NULL,         -- FROM CDXP cdxp.<Payer>GapAuditLog.GapKey; FROM C8 alert.DetailHistory.DetailId
 
 	-- Delivery status (CDXP)
-	[GapStatusKey]          TINYINT           NOT NULL,         -- FROM CDXP cdxp.HPPGapAuditLog.GapStatusKey
-	[Source]                VARCHAR(20)       NULL,             -- FROM CDXP cdxp.HPPGapAuditLog.Source
-	[IsDuplicate]           BIT               NULL,             -- FROM CDXP cdxp.HPPGapAuditLog.IsDuplicate
+	[GapStatusKey]          TINYINT           NOT NULL,         -- FROM CDXP cdxp.<Payer>GapAuditLog.GapStatusKey
+	[Source]                VARCHAR(20)       NULL,             -- FROM CDXP cdxp.<Payer>GapAuditLog.Source
+	[IsDuplicate]           BIT               NULL,             -- FROM CDXP cdxp.<Payer>GapAuditLog.IsDuplicate
 
 	-- Program lifecycle (C8)
 	[IsInSource]            BIT               NULL,             -- FROM C8 alert.Detail.IsInSource (isActive before feature/pfa-refactor)
@@ -28,6 +28,6 @@ CREATE TABLE [cdxp].[BulkGapAuditLog] (
 	[LastStagingRunId]      UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.LastStagingRunId
 
 	-- Audit
-	[InsertDate]            DATETIME          NOT NULL,         -- FROM CDXP cdxp.HPPGapAuditLog.InsertDate; FROM C8 alert.DetailHistory.UpdateDate
-	[InsertedBy]            NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.HPPGapAuditLog.InsertedBy; FROM C8 alert.Detail.UpdatedBy
+	[InsertDate]            DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>GapAuditLog.InsertDate; FROM C8 alert.DetailHistory.UpdateDate
+	[InsertedBy]            NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.<Payer>GapAuditLog.InsertedBy; FROM C8 alert.Detail.UpdatedBy
 );

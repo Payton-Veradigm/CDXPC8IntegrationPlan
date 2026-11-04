@@ -1,7 +1,7 @@
 /*
     cdxp.BulkGapClinicalCode: the gap's codes, one row per code. Many to one with cdxp.BulkGap.
 
-    Base:    cdxp.HPPGapClinicalCode (CDXP). PA-4 already builds this table with these columns (Ciep.AppService
+    Base:    CDXP's per-payer cdxp.<Payer>GapClinicalCode. PA-4 already builds this table with these columns (Ciep.AppService
              DevBranch, Schema/cdxp/Tables/Bulk/BulkGapClinicalCode.sql). PA-5's save fills it from each gap's Codes array.
     Laid in: no new columns. The code columns that moved out of cdxp.BulkGapDetail land here, and C8's codes the same way.
 
@@ -29,23 +29,23 @@
 CREATE TABLE [cdxp].[BulkGapClinicalCode] (
 	-- Keys and partition
 	[PayerPartitionKey]  SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
-	[ClinicalCodeKey]    BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.HPPGapClinicalCode.ClinicalCodeKey
-	[GapKey]             BIGINT            NOT NULL,         -- FROM CDXP cdxp.HPPGapClinicalCode.GapKey -> cdxp.BulkGap
-	[MemberKey]          BIGINT            NULL,             -- FROM CDXP cdxp.HPPGapClinicalCode.MemberKey -> cdxp.BulkMember (the gap's member, repeated)
+	[ClinicalCodeKey]    BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.<Payer>GapClinicalCode.ClinicalCodeKey
+	[GapKey]             BIGINT            NOT NULL,         -- FROM CDXP cdxp.<Payer>GapClinicalCode.GapKey -> cdxp.BulkGap
+	[MemberKey]          BIGINT            NULL,             -- FROM CDXP cdxp.<Payer>GapClinicalCode.MemberKey -> cdxp.BulkMember (the gap's member, repeated)
 
 	-- The code
-	[GapType]            VARCHAR(20)       NULL,             -- FROM CDXP cdxp.HPPGapClinicalCode.GapType: CI, CV, GIC, PatientSafety, MedicineAdherence, SDOH, EDU
-	[CodeType]           VARCHAR(50)       NOT NULL,         -- FROM CDXP cdxp.HPPGapClinicalCode.CodeType: Measure or Diagnosis
-	[CodeSystem]         VARCHAR(50)       NULL,             -- FROM CDXP HPP row.ModelName or MeasureNameModel; FROM C8 alert.HealthCodingModel.ModelBase or MeasureNameModel
-	[CodeVersion]        VARCHAR(20)       NULL,             -- FROM CDXP HPP row.ModelNo; FROM C8 alert.HealthCodingModel.ModelVersion
-	[CodeExtension]      VARCHAR(50)       NULL,             -- FROM CDXP the MeasureReport identifier with system .../identifier/CodeExtension (HPP row.Value)
-	[CodeValue]          VARCHAR(50)       NULL,             -- FROM CDXP HPP row.ConditionCode, DiagnosisCode, or ShortMeasureName; FROM C8 ConditionCode, Diagnosis[0].CodeFormatted, or SourceMeasureId
-	[CodeSignature]      AS (...) PERSISTED,                 -- FROM CDXP cdxp.HPPGapClinicalCode.CodeSignature: GapType|CodeType|CodeSystem|CodeVersion|CodeExtension|CodeValue
-	[GapModelKey]        INT               NULL,             -- FROM CDXP cdxp.HPPGapClinicalCode.GapModelKey -> cdxp.GapModels; NULL when no model matches
+	[GapType]            VARCHAR(20)       NULL,             -- FROM CDXP cdxp.<Payer>GapClinicalCode.GapType: CI, CV, GIC, PatientSafety, MedicineAdherence, SDOH, EDU
+	[CodeType]           VARCHAR(50)       NOT NULL,         -- FROM CDXP cdxp.<Payer>GapClinicalCode.CodeType: Measure or Diagnosis
+	[CodeSystem]         VARCHAR(50)       NULL,             -- FROM CDXP bulk row.ModelName or MeasureNameModel; FROM C8 alert.HealthCodingModel.ModelBase or MeasureNameModel
+	[CodeVersion]        VARCHAR(20)       NULL,             -- FROM CDXP bulk row.ModelNo; FROM C8 alert.HealthCodingModel.ModelVersion
+	[CodeExtension]      VARCHAR(50)       NULL,             -- FROM CDXP the MeasureReport identifier with system .../identifier/CodeExtension (bulk row.Value)
+	[CodeValue]          VARCHAR(50)       NULL,             -- FROM CDXP bulk row.ConditionCode, DiagnosisCode, or ShortMeasureName; FROM C8 ConditionCode, Diagnosis[0].CodeFormatted, or SourceMeasureId
+	[CodeSignature]      AS (...) PERSISTED,                 -- FROM CDXP cdxp.<Payer>GapClinicalCode.CodeSignature: GapType|CodeType|CodeSystem|CodeVersion|CodeExtension|CodeValue|Period
+	[GapModelKey]        INT               NULL,             -- FROM CDXP cdxp.<Payer>GapClinicalCode.GapModelKey -> cdxp.GapModels; NULL when no model matches
 
 	-- Audit
-	[InsertDate]         DATETIME          NOT NULL,         -- FROM CDXP cdxp.HPPGapClinicalCode.InsertDate
-	[InsertedBy]         NVARCHAR(128)     NOT NULL,         -- FROM CDXP cdxp.HPPGapClinicalCode.InsertedBy
-	[LastUpdated]        DATETIME          NOT NULL,         -- FROM CDXP cdxp.HPPGapClinicalCode.LastUpdated
-	[LastUpdatedBy]      NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.HPPGapClinicalCode.LastUpdatedBy
+	[InsertDate]         DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>GapClinicalCode.InsertDate
+	[InsertedBy]         NVARCHAR(128)     NOT NULL,         -- FROM CDXP cdxp.<Payer>GapClinicalCode.InsertedBy
+	[LastUpdated]        DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>GapClinicalCode.LastUpdated
+	[LastUpdatedBy]      NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.<Payer>GapClinicalCode.LastUpdatedBy
 );

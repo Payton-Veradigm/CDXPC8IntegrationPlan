@@ -5,7 +5,8 @@
     Base:     alert.MemberProviderStatus (C8, feature/pfa-refactor). CDXP has no equivalent.
     Replaces: its history table, alert.MemberProviderStatusHistory. A change is a new row, as in cdxp.BulkGapFeedback.
 
-    "Not seen here" is one practice's claim, so it's keyed on the provider as well as the member.
+    "Not seen here" is one practice's claim, so it's keyed on the provider as well as the member. C8 keys it on the
+    payer's provider ID, so two payer IDs under one NPI keep separate rows.
     alert.vw_GapStatus counts a gap as Responded when its member is Not Seen Here for the gap's provider, and the
     provider feedback report draft shows it as the gap's feedback ("Patient Not Seen Here").
 
@@ -17,7 +18,8 @@ CREATE TABLE [cdxp].[BulkMemberProviderStatus] (
 	[PayerPartitionKey]        SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
 	[MemberProviderStatusKey]  BIGINT            IDENTITY(1, 1),   -- NEW; C8 keys on a sequential GUID, MemberProviderStatusId
 	[MemberKey]                BIGINT            NOT NULL,         -- NEW -> cdxp.BulkMember; FROM C8 alert.MemberProviderStatus.AlertMemberId
-	[BulkProviderKey]          BIGINT            NOT NULL,         -- NEW -> cdxp.BulkProvider; FROM C8 alert.MemberProviderStatus.ProviderId VARCHAR(100), resolved with the member's LOB
+	[ProviderKey]              BIGINT            NULL,             -- NEW -> cdxp.Provider: the NPI of the provider below; NULL when it has none
+	[PayerProviderId]          VARCHAR(100)      NOT NULL,         -- FROM C8 alert.MemberProviderStatus.ProviderId; with the member's LOB it finds cdxp.PayerProvider
 
 	-- The assertion
 	[IsNotSeenHere]            BIT               NOT NULL,         -- FROM C8 alert.MemberProviderStatus.IsNotSeenHere
