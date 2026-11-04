@@ -20,3 +20,4 @@
   - Does LOB live on the member, as in TRX, or on the gap, as in CDXP?
 - **Feeds these decisions:** gap identity, member identity, lifecycle, FHIR Publish's replacement, gap types and LOB, column ownership, and PHI.
 - **Must support parity:** the model needs every field that the side-by-side check compares with TRX.
+- **Decided:** evidence (notes, claims, medications, procedures, diagnostics) gets no `Bulk*` tables. It lives in blob storage only (2026-11-02, Payton Obrycki).

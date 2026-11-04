@@ -4,9 +4,15 @@
 
     Replaces:
       CDXP  cdxp.HPPGap.NPI (one NPI per gap) and the HPP row's ReportingProvider* fields
-      C8    alert.Master.ProviderId and ProviderType (a provider per master record), and alert.Member.PCPId (via the member)
+      C8    alert.Detail.ProviderId (the gap's provider on feature/pfa-refactor; alert.Master.ProviderId in Prod),
+            and alert.Member.PCPId (via the member)
 
-    Providers tied to a single piece of evidence (claim provider, prescriber, performer) are on that evidence row (evidence/).
+    Each gap has exactly one Attributed row: the provider the gap was sent under. cdxp.BulkGapAccess builds its keys
+    from it, so it decides which Provider SSO users see the gap. The PCP row can't stand in: C8's analytics gaps carry
+    their own provider (PRVDR_ID), which can differ from the member's PCP. Only gaps sent without a provider, and OTB's
+    FHIR risk gaps, fall back to the PCP.
+
+    Providers tied to a single piece of evidence (claim provider, prescriber, performer) stay with the evidence in blob storage.
     The provider who responded is on the feedback row (cdxp.BulkGapFeedback).
 
     Pseudo-code: no constraints or indexes. Partitioned on PayerPartitionKey (00-PayerPartition.sql).
@@ -23,7 +29,7 @@ CREATE TABLE [cdxp].[ProviderGapRole] (
 );
 
 -- Roles. Source of each in brackets.
---   1  Attributed  the provider the gap is assigned to  [CDXP cdxp.HPPGap.NPI; C8 alert.Master.ProviderId]
+--   1  Attributed  the provider the gap is assigned to, exactly one per gap  [CDXP cdxp.HPPGap.NPI; C8 alert.Detail.ProviderId]
 --   2  PCP         the member's PCP, when the gap is delivered through it  [C8 alert.Member.PCPId]
 --   3  Reporting   the provider who reported the gap  [CDXP HPP row.ReportingProviderId, ReportingProviderFirstName/LastName, ReportingProviderSpecDesc]
 
@@ -31,8 +37,8 @@ CREATE TABLE [cdxp].[BulkProviderGap] (
 	-- Keys and partition
 	[PayerPartitionKey]  SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
 	[GapKey]             BIGINT            NOT NULL,         -- NEW -> cdxp.BulkGap
-	[BulkProviderKey]    BIGINT            NOT NULL,         -- NEW -> cdxp.BulkProvider; FROM CDXP cdxp.HPPGap.NPI; FROM C8 alert.Master.NPI VARCHAR(45) (resolved by NPI)
-	[ProviderGapRoleKey] TINYINT           NOT NULL,         -- NEW -> cdxp.ProviderGapRole; FROM C8 alert.Master.ProviderType VARCHAR(10) for C8's attributed provider
+	[BulkProviderKey]    BIGINT            NOT NULL,         -- NEW -> cdxp.BulkProvider; FROM CDXP cdxp.HPPGap.NPI (resolved by NPI); FROM C8 alert.Detail.ProviderId (resolved on LOB and PayerProviderId)
+	[ProviderGapRoleKey] TINYINT           NOT NULL,         -- NEW -> cdxp.ProviderGapRole
 
 	-- As sent
 	[SpecDesc]           VARCHAR(100)      NULL,             -- FROM CDXP HPP row.ReportingProviderSpecDesc (role Reporting only)

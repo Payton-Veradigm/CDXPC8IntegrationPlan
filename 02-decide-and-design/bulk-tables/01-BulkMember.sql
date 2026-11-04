@@ -15,6 +15,7 @@ CREATE TABLE [cdxp].[BulkMember] (
 	[MemberKey]                   BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.HPPMember.MemberKey
 	[AlertMemberId]               UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.AlertMemberId (TRX PK; FHIR Patient.Id)
 	[LineOfBusinessKey]           TINYINT           NULL,             -- FROM C8 alert.Member.LOB VARCHAR(10), mapped to cdxp.LineOfBusiness; CDXP keeps LOB on the gap only
+	-- A member can have gaps form multiple LOBs, correct?
 
 	-- Member identifiers (PHI)
 	[MemberID]                    VARBINARY(256)    NOT NULL,         -- FROM CDXP cdxp.HPPMember.MemberID; FROM C8 alert.Member.MemberId VARCHAR(50)
@@ -28,11 +29,14 @@ CREATE TABLE [cdxp].[BulkMember] (
 	[FirstName]                   VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.FirstName; FROM C8 alert.Member.FirstName NVARCHAR(45)
 	[DateOfBirth]                 VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.DateOfBirth; FROM C8 alert.Member.DOB DATE
 	[Gender]                      VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.Gender; FROM C8 alert.Member.Gender VARCHAR(1)
-	[Zip5]                        VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.Zip5; FROM C8 alert.Member.ZipCode VARCHAR(10) (C8 keeps ZIP+4)
+	[Zip5]                        VARBINARY(256)    NULL,             -- FROM CDXP cdxp.HPPMember.Zip5; for C8, the first five digits of alert.Member.ZipCode
+	[ZipCode]                     VARBINARY(256)    NULL,             -- FROM C8 alert.Member.ZipCode VARCHAR(10), ZIP+4 when sent
 	[Address]                     VARBINARY(256)    NULL,             -- FROM C8 alert.Member.Address NVARCHAR(45)
 	[City]                        VARBINARY(256)    NULL,             -- FROM C8 alert.Member.City NVARCHAR(45)
 	[State]                       NVARCHAR(2)       NULL,             -- FROM C8 alert.Member.State
 	[Phone]                       VARBINARY(256)    NULL,             -- FROM C8 alert.Member.Phone NVARCHAR(25)
+	[IsDeceased]                  BIT               NULL,             -- FROM C8 alert.Member.IsDeceased (feature/pfa-refactor; NOT NULL DEFAULT 0 there)
+	[DeceasedDate]                VARBINARY(256)    NULL,             -- FROM C8 alert.Member.DeceasedDate DATE (feature/pfa-refactor)
 
 	-- Matching (CDXP)
 	[LNameDOBHash]                BIGINT            NULL,             -- FROM CDXP cdxp.HPPMember.LNameDOBHash
@@ -68,7 +72,7 @@ CREATE TABLE [cdxp].[BulkMember] (
 	[MedCenterDesc]               VARCHAR(150)      NULL,             -- FROM C8 alert.Member.MedCenterDesc
 	[SettlementEntityID]          VARCHAR(100)      NULL,             -- FROM C8 alert.Member.SettlementEntityID
 	[SettlementEntityName]        VARCHAR(150)      NULL,             -- FROM C8 alert.Member.SettlementEntityName
-	[GroupAttribOption]           VARCHAR(200)      NULL,             -- FROM C8 alert.Member.GroupAttribOption
+	[GroupAttribOption]           VARCHAR(200)      NULL,             -- FROM C8 alert.Member.GroupAttribOption: MemberDriven puts these, not the gap provider's, in cdxp.BulkGapAccess; CDXP feeds need a tenant-and-LOB default
 	[Risk_Contract_ID]            VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_ID
 	[Risk_Contract_Group]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Group
 	[Risk_Contract_Class]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Class

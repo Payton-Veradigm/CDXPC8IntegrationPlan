@@ -15,8 +15,11 @@
                       VIM Bulk, Veradigm Pro, Practice Fusion, Epic, Athena, NextGen
       alert.GetAlertExport derives FeedbackSource the same way: 'PFA' when the broker is PFA, otherwise the external source.
 
+    Member-level answers aren't here: deceased is on cdxp.BulkMember, and Not Seen Here is cdxp.BulkMemberProviderStatus.
+
     Open:
       one current response per gap, or per origin? (C8 holds a PFA answer and an EHR answer at once today)
+        The 2026-10-30 provider feedback report draft shows one per gap: member-level, then PFA, then EHR.
       merge C8's per-tenant alert.FeedbackType (limited per gap type by alert.DetailType_FeedbackType) with CDXP's global cdxp.FeedBackType
       FeedbackOrigin and FeedbackSource as text here, or as keys to lookup tables
 
@@ -47,12 +50,10 @@ CREATE TABLE [cdxp].[BulkGapFeedback] (
 	-- Who responded
 	[BulkProviderKey]       BIGINT            NULL,             -- NEW -> cdxp.BulkProvider; FROM CDXP cdxp.Gap.ProviderNPIKey; FROM C8 alert.Detail.FeedbackNpi VARCHAR(45) (resolved by NPI)
 	[FeedbackUser]          NVARCHAR(256)     NULL,             -- FROM C8 alert.Detail.UpdatedBy today (FeedbackUser on jk/pfa-refactor)
+	[FeedbackUserFullName]  NVARCHAR(256)     NULL,             -- NEW: the responder's full name, saved with the response; C8 keeps only the username
 
 	-- Content pointer
 	[FeedbackFileLocation]  VARCHAR(500)      NULL,             -- FROM CDXP cdxp.Gap.FeedbackFileLocation; goes away once content lives in SQL
-
-	-- State
-	[IsCurrent]             BIT               NOT NULL,         -- NEW: the latest response from this origin
 
 	-- Audit
 	[InsertDate]            DATETIME          NOT NULL,         -- NEW, CDXP audit pattern

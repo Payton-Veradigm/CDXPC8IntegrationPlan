@@ -1,5 +1,5 @@
 /*
-    cdxp.BulkProvider: the payer's provider records (PCPs, attributed providers, evidence providers, responders).
+    cdxp.BulkProvider: the payer's provider records (PCPs, attributed providers, responders).
 
     Base:    cdxp.Provider as reshaped by PR 53441 (BrandonDev_ProviderNPI_Split_Release2, Brandon Schroeder),
              which makes cdxp.Provider global: one row per NPI, with name and taxonomy classification.
@@ -16,12 +16,14 @@ CREATE TABLE [cdxp].[BulkProvider] (
 	[PayerPartitionKey]             SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
 	[BulkProviderKey]               BIGINT            IDENTITY(1, 1),   -- NEW, modeled on cdxp.Provider.ProviderKey
 	[ProviderKey]                   BIGINT            NULL,             -- NEW: the global cdxp.Provider row for this NPI; NULL when the payer sent no NPI
-	[LineOfBusinessKey]             TINYINT           NULL,             -- FROM C8 alert.Provider.LOB VARCHAR(10); part of C8's unique key (LOB, ProviderId)
+	[LineOfBusinessKey]             TINYINT           NULL,             -- FROM C8 alert.Provider.LOB VARCHAR(10); part of C8's unique key (LOB, ProviderId), which finds the gap's provider
 
 	-- Provider identifiers
 	[PayerProviderId]               VARCHAR(100)      NULL,             -- FROM C8 alert.Provider.ProviderId (NOT NULL in C8); alert.Member.PCPId points at it
 	[NPI]                           BIGINT            NULL,             -- FROM CDXP cdxp.Provider.NPI (NOT NULL there); FROM C8 alert.Provider.NPI VARCHAR(45)
-	[TIN]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN
+	[TIN]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN; FROM CDXP the V5.8 spec's TIN, recorded at ingestion
+	-- The PROVIDER_TIN access key (cdxp.BulkGapAccess) matches this TIN, one per provider record, so no separate TIN
+	-- table is needed. CDXP's site TIN (Provider -> ProviderSite -> Site -> SiteTin) is a different value.
 
 	-- Name
 	[ProviderName]                  VARCHAR(255)      NULL,             -- FROM CDXP cdxp.Provider.ProviderName; C8 computes alert.Provider.ProviderName as "LastName, FirstName"

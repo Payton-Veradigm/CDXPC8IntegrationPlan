@@ -23,7 +23,7 @@ There are three levels, each more detailed than the last:
 
 Next to the one-page, **[timeline.md](timeline.md)** turns the hours into calendar weeks for 2 or 3 devs per team, with the phases overlapped.
 
-The shared data model's draft tables are in **[02-decide-and-design/bulk-tables/](02-decide-and-design/bulk-tables/)**: pseudo-SQL `CREATE TABLE` statements for the `cdxp.Bulk*` tables (member, provider, gap, gap detail, audit log, provider-gap link, feedback) and, in `evidence/`, one table per evidence type. Each column says where it came from (CDXP, C8, or new). They have no constraints or indexes yet.
+The shared data model's draft tables are in **[02-decide-and-design/bulk-tables/](02-decide-and-design/bulk-tables/)**: pseudo-SQL `CREATE TABLE` statements for the `cdxp.Bulk*` tables (member, provider, gap, gap detail, audit log, provider-gap link, feedback, member-provider status, clinical code, gap access). Evidence has no tables; it lives in blob storage only. Each column says where it came from (CDXP, C8, or new). They have no constraints or indexes yet.
 
 ```text
 CDXPC8IntegrationPlan/
@@ -39,7 +39,6 @@ CDXPC8IntegrationPlan/
     bulk-tables/
       01-BulkMember.sql
       ...
-      evidence/
   03-build-foundation/
   ...
   09-retire/

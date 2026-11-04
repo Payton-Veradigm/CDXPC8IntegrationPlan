@@ -58,7 +58,7 @@
 ## What it means for the bulk-table drafts
 
 - **BulkGap:**
-  - Lay in `IsInSource` (replacing `IsActive`), `IsExpired`, `ExpiredDate`, `EvaluationPeriod`, `ProgramYear`, and `GapSource`.
+  - Laid in `IsInSource` (replacing `IsActive`), `IsExpired`, `ExpiredDate`, `EvaluationPeriod`, `ProgramYear`, and `GapSource`.
   - `MasterId` can go, since Master is archived.
   - `AlertCompletedDateId` is already out.
 - **BulkGapFeedback:**
@@ -66,12 +66,13 @@
   - Drop `ExternalFeedbackSourceId`, which the branch removes. `FeedbackSource` comes from `ExternalSourceId` -> `alert.ExternalSource`.
   - `alert.FeedbackHistory` confirms per-gap responses with history.
 - **BulkProviderGap:**
-  - The Attributed provider now comes from `alert.Detail.ProviderId`, not `alert.Master.ProviderId`.
+  - The Attributed provider now comes from `alert.Detail.ProviderId`, not `alert.Master.ProviderId`. Exactly one per gap.
   - The PCP still comes from `alert.Member.PCPId`.
-- **BulkMember:** lay in `IsDeceased` and `DeceasedDate`.
-- **BulkGapAuditLog:** `IsActive` becomes `IsInSource`. Add `IsExpired`.
+- **BulkMember:** laid in `IsDeceased` and `DeceasedDate`.
+- **BulkGapAuditLog:** `IsActive` is now `IsInSource`, and `IsExpired` is added.
+- **BulkMemberProviderStatus:** Not Seen Here, from `MemberProviderStatus`, which `vw_GapStatus` reads.
+- **BulkGapAccess:** `alert.Mapping`, which the branch keys on the gap. Its keys come from the gap's Attributed provider, not the PCP.
 - **Not modeled yet:**
-  - Not Seen Here (`MemberProviderStatus`), a member-provider table that `vw_GapStatus` reads.
   - The member monthly snapshot (`MemberMonths`).
   - Documents and their gap links.
 - **Gap status:**

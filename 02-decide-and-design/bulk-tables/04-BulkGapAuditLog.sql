@@ -20,7 +20,8 @@ CREATE TABLE [cdxp].[BulkGapAuditLog] (
 	[IsDuplicate]           BIT               NULL,             -- FROM CDXP cdxp.HPPGapAuditLog.IsDuplicate
 
 	-- Program lifecycle (C8)
-	[IsActive]              BIT               NULL,             -- FROM C8 alert.Detail.isActive
+	[IsInSource]            BIT               NULL,             -- FROM C8 alert.Detail.IsInSource (isActive before feature/pfa-refactor)
+	[IsExpired]             BIT               NULL,             -- FROM C8 alert.Detail.IsExpired
 	[LatestActivationDate]  DATETIME2         NULL,             -- FROM C8 alert.Detail.LatestActivationDate
 
 	-- Load lineage
