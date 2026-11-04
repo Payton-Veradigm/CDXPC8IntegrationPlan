@@ -5,7 +5,10 @@
 - **What:** four shared tables in `cdxp`, each keyed by tenant first.
 - **Who builds it:** CDXP, into the consolidated bulk tables, in its own codebase. Both teams design it, and Collaborate reviews it.
 - **Full draft:** [shared-data-model-sql.md](shared-data-model-sql.md) (pseudo-SQL, plus the questions about simplifying it).
-- **Built from:** Collaborate's `alert` tables, including the gap-centric columns on branch `jk/pfa-refactor`, and CDXP's per-payer tables.
+- **CDXP base:** Payer Automation's PA-4 already creates the generic `cdxp.Bulk*` tables; the shared model extends them. See [payer-automation-bulk-tables.md](payer-automation-bulk-tables.md).
+- **C8 source:** design against `feature/pfa-refactor`, not Prod. What it changes: [pfa-refactor-data-model.md](pfa-refactor-data-model.md).
+- **Coverage matrix:** [coverage-matrix.xlsx](coverage-matrix.xlsx) maps every column to the use cases that key, filter, read, or write it, and flags columns to drop, move to JSON, promote, or add.
+- **Built from:** Collaborate's `alert` tables, including the columns from [the master-record removal](../../01-prerequisites/notes/master-record-removal.md) (branch `jk/pfa-refactor`), and CDXP's per-payer tables.
 - **The tables:**
   - **`BulkPayerMember`:** one row per member, per tenant and LOB. It holds PHI, CDXP's match hashes, the PCP, and a JSON column for payer-specific attributes.
   - **`BulkPayerProvider`:** the payer's provider records (PCPs and attributed providers), keyed by the payer's provider ID, with the NPI.

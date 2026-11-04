@@ -4,8 +4,8 @@
 
 Estimates are effort per team, in dev hours (LLM-assisted) and decision hours. See the [README](README.md). C8 is the Collaborate team.
 
-1. **[Prerequisites](01-prerequisites/steps.md)**: the CDXP team's spec builder, ingestor, and consolidated tables in place (its own project), owners named, and the facts gathered.
-   - C8 10 dev h, 7 decision h | CDXP 6 dev h, 6 decision h | CDXP team project not counted
+1. **[Prerequisites](01-prerequisites/steps.md)**: Collaborate's master-record removal released, the CDXP team's spec builder, ingestor, and consolidated tables in place (its own project), owners named, and the facts gathered.
+   - C8 122 dev h, 7 decision h | CDXP 6 dev h, 6 decision h | CDXP team project not counted
 2. **[Design the shared data model](02-decide-and-design/steps.md)**: both teams meet and design the model, and settle the decisions it depends on, including ingestion restrictions.
    - C8 14 dev h, 76 decision h | CDXP 54 dev h, 74 decision h
 3. **[Implement the shared data model](03-build-foundation/steps.md)**: CDXP builds the model into the consolidated bulk tables, with isolation and PHI protection.
@@ -23,9 +23,9 @@ Estimates are effort per team, in dev hours (LLM-assisted) and decision hours. S
 9. **[Retire the old pieces](09-retire/steps.md)**: TRX databases archived, old code removed, and VM capacity released.
    - Merged team 74 dev h, 2 decision h
 
-**Totals:** C8 400 dev h, 160 decision h | CDXP 1140 dev h, 159 decision h | Merged team 106 dev h, 4 decision h
+**Totals:** C8 512 dev h, 160 decision h | CDXP 1140 dev h, 159 decision h | Merged team 106 dev h, 4 decision h
 
-**In work days (8 hours each):** C8 about 50 dev days and 20 decision days | CDXP about 143 dev days and 20 decision days | Merged team about 13 dev days and half a decision day. About 246 work days in all.
+**In work days (8 hours each):** C8 about 64 dev days and 20 decision days | CDXP about 143 dev days and 20 decision days | Merged team about 13 dev days and half a decision day. About 260 work days in all.
 
 **Calendar, with phases overlapped:** about 43 weeks with 3 devs per team, or 46 with 2 (roughly 10 to 11 months). Waiting on decisions, monthly side-by-side cycles, and soaks sets most of it. See [the timeline](timeline.md).
 

@@ -9,4 +9,6 @@
 - **Normalize first.** TRX times are local and the new tables are UTC. Check that the collations match.
 - **Report:** row counts, checksums, and a list of every difference, with the rule or field behind it.
 - **Reuse** CIEP's parallel-run comparison and scratch partitions (#170106). Keep scratch rows out of Snowflake.
-- **Needs:** a network path between the TRX VMs and CDXP's SQL.
+- **Needs:**
+  - A network path between the TRX VMs and CDXP's SQL.
+  - [The master-record removal](../../01-prerequisites/notes/master-record-removal.md) live in TRX, so both sides compare gap to gap.

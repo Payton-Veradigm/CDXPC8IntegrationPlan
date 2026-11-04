@@ -2,6 +2,7 @@
 
 [Back to steps](../steps.md)
 
+- Start from the gap-centric screens that [the master-record removal](../../01-prerequisites/notes/master-record-removal.md) builds.
 - Swap the PFA's data access (EF Core `AlertContext` and Dapper) for the contract's reads and writes.
 - **Screens:** the member grid, gap details, KPIs, feedback, and "not seen here".
 - **Dates:** the new tables are UTC, so convert for display. The app uses `DateTime.Now` in many places today.

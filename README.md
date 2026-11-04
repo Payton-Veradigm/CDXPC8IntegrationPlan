@@ -4,11 +4,12 @@ A working plan for moving Collaborate's per-customer TRX databases and CDXP's pe
 
 **The approach (agreed 2026-10-07):**
 
-1. The CDXP team builds its spec builder, ingestor, and consolidated bulk tables, as its own project.
-2. CDXP and Collaborate design one shared data model together.
-3. CDXP implements the model in the consolidated bulk tables, in CDXP's codebase.
-4. Collaborate's payers are cut into CDXP's process one at a time, and checked side by side against TRX until the data matches. This includes making OTB multi-headed and working with RAA on the ANR data.
-5. Once a payer's data matches, Collaborate moves the Portal and PFA to the new source. The point of care and soft closure move at the same time.
+1. Collaborate finishes removing the master record (Jason's gap-centric refactor), so TRX already has the shared model's shape.
+2. The CDXP team builds its spec builder, ingestor, and consolidated bulk tables, as its own project.
+3. CDXP and Collaborate design one shared data model together.
+4. CDXP implements the model in the consolidated bulk tables, in CDXP's codebase.
+5. Collaborate's payers are cut into CDXP's process one at a time, and checked side by side against TRX until the data matches. This includes making OTB multi-headed and working with RAA on the ANR data.
+6. Once a payer's data matches, Collaborate moves the Portal and PFA to the new source. The point of care and soft closure move at the same time.
 
 Collaborate takes part in every decision. CDXP does most of the building.
 

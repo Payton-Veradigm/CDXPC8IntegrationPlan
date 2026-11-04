@@ -6,7 +6,7 @@
 
 - Most of the calendar is waiting, not work: design decisions, monthly side-by-side cycles, and soaks.
 - A third dev on each team only shortens the build stretches (phase 3 and phase 5's build), so it saves about 3 weeks.
-- Over the whole plan, this work fills about a third (3 devs) to half (2 devs) of CDXP's assumed time, and about a sixth to a fifth of Collaborate's.
+- Over the whole plan, this work fills about a third (3 devs) to half (2 devs) of CDXP's assumed time, and about a fifth to a quarter of Collaborate's.
 
 ## Assumptions
 
@@ -15,6 +15,7 @@
 - **Merged team:** both teams together, from phase 8.
 - **Week 0** is the start of phase 1. The CDXP team's project (spec builder, ingestor, and consolidated tables) runs before or alongside phases 1 and 2, and has to be done by week 8. If it isn't, everything after week 8 moves out by the same amount.
 - **Compliance** signs off on shared tables by week 8, before anything is built.
+- **Collaborate's master-record removal** is finished by about week 4 (3 devs) or 5 (2 devs), and rolled out through the weekly releases by week 10 or 11. That leaves about 4 to 6 weeks of slack before the first side-by-side run.
 - **Waits,** taken from the notes, or assumed where the notes leave them open:
   - Phase 1: about 2 weeks to name owners, get DBOps's baseline, and start the compliance review.
   - Phase 2: about 6 weeks of weekly joint sessions for about 20 decisions, with Security and Compliance.
@@ -26,6 +27,7 @@
 
 ## What overlaps
 
+- **The master-record removal** (phase 1) runs alongside phases 1 to 3, and has to be live in TRX before the first side-by-side run.
 - **Phase 4** (CDXP's bulk payers) runs while phase 5's first payer is side by side. It's off the critical path, except re-pointing CDXP's readers, which has to be done before the first move.
 - **Phase 6** runs alongside phase 5's build and first cycle, and finishes before the first move.
 - **Phase 7's build** runs during phase 5: Collaborate from week 11, and CDXP once phase 5's build is done.
@@ -38,6 +40,7 @@
 | Phase or stretch | 3 devs per team | 2 devs per team | Pace set by |
 |---|---|---|---|
 | 1. Prerequisites | Weeks 0 to 2 | Weeks 0 to 2 | Owners, DBOps, the compliance review |
+| 1. Master-record removal (Collaborate) | 0 to 10 | 0 to 11 | Collaborate's work, then the weekly releases |
 | 2. Design the shared data model | 2 to 8 | 2 to 8 | Decisions |
 | 3. Implement the shared data model | 8 to 11 | 8 to 11 | CDXP's work (206 h) |
 | 5. Build the cut-in | 11 to 14 | 11 to 17 | CDXP's work (311 h) |
@@ -56,6 +59,7 @@
                           0    5    10   15   20   25   30   35   40   45
 Week                      |    |    |    |    |    |    |    |    |    |
 1 Prerequisites           ==
+1 Master-record removal   ####......
 2 Design                    ======
 3 Implement                       ###
 5 Build the cut-in                   ###

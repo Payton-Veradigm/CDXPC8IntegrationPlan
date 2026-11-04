@@ -1,0 +1,24 @@
+---
+description: Which C8 sources to use for shared-repo design work, and which wins when they disagree
+alwaysApply: true
+---
+
+# C8 sources for design work
+
+Use both of these when reading the C8 (Collaborate) data model or app behavior:
+
+- **Feature branch (in-flight, takes precedence):** `feature/pfa-refactor` in `veradigm-payer-portal`,
+  checked out as a worktree at `C:\veradigm-payer-portal-pfa-refactor`. TRX schema: `db/_Template_TRX`.
+  Guide: https://veradigm.atlassian.net/wiki/spaces/TECH/pages/7430504497 (Feature 170585).
+- **Collaborate Knowledge Base (CKB):** `C:\collaborate-knowledge-base`. It documents Prod, not in-flight features.
+
+When they contradict each other, the feature branch code wins. Say which source a fact came from.
+
+- Refresh the worktree before relying on it: `git -C C:\veradigm-payer-portal-pfa-refactor pull`.
+- Compare the branch against `origin/main`, not a local `main`.
+- Don't edit the CKB for feature-branch work, and don't push to `feature/pfa-refactor` (PRs only).
+- `C:\C8DB` (Pulse8.Databases.TRX, `release/2026.06.01`) is an older TRX baseline. Use it only for "what Prod has today" comparisons.
+- What the branch changes in the C8 data model is summarized in `02-decide-and-design/notes/pfa-refactor-data-model.md`.
+
+Example: the CKB says a provider alert is an `alert.Master` row. The branch moves Master to `archive` and makes
+`alert.Detail` the gap with its own `ProviderId`, so design against `alert.Detail`.
