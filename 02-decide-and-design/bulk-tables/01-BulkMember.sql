@@ -64,18 +64,18 @@ CREATE TABLE [cdxp].[BulkMember] (
 	[ModelDetail]                 VARCHAR(45)       NULL,             -- FROM C8 alert.Member.ModelDetail
 
 	-- Org hierarchy and contracts (drive C8 access mapping and reports)
-	[GroupID]                     VARCHAR(100)      NULL,             -- FROM C8 alert.Member.GroupID
-	[GroupName]                   VARCHAR(150)      NULL,             -- FROM C8 alert.Member.GroupName
+	[GroupID]                     VARCHAR(100)      NULL,             -- FROM C8 alert.Member.GroupID; access key GROUP_ID when MemberDriven
+	[GroupName]                   VARCHAR(150)      NULL,             -- FROM C8 alert.Member.GroupName; access key GROUP_ID when MemberDriven
 	[SuperGroupID]                VARCHAR(100)      NULL,             -- FROM C8 alert.Member.SuperGroupID
 	[SuperGroupName]              VARCHAR(150)      NULL,             -- FROM C8 alert.Member.SuperGroupName
-	[MedCenter]                   VARCHAR(100)      NULL,             -- FROM C8 alert.Member.MedCenter
+	[MedCenter]                   VARCHAR(100)      NULL,             -- FROM C8 alert.Member.MedCenter; access key MED_CENTER when MemberDriven
 	[MedCenterDesc]               VARCHAR(150)      NULL,             -- FROM C8 alert.Member.MedCenterDesc
 	[SettlementEntityID]          VARCHAR(100)      NULL,             -- FROM C8 alert.Member.SettlementEntityID
 	[SettlementEntityName]        VARCHAR(150)      NULL,             -- FROM C8 alert.Member.SettlementEntityName
 	[GroupAttribOption]           VARCHAR(200)      NULL,             -- FROM C8 alert.Member.GroupAttribOption: MemberDriven puts these, not the gap provider's, in cdxp.BulkGapAccess; CDXP feeds need a tenant-and-LOB default
 	[Risk_Contract_ID]            VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_ID
 	[Risk_Contract_Group]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Group
-	[Risk_Contract_Class]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Class
+	[Risk_Contract_Class]         VARCHAR(100)      NULL,             -- FROM C8 alert.Member.Risk_Contract_Class; access key RISK_CONTRACT_CLASS when MemberDriven
 
 	-- Risk metrics
 	[LastPMRRDate]                DATETIME2         NULL,             -- FROM C8 alert.Member.LastPMRRDate

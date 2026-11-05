@@ -8,8 +8,9 @@
            publish. Every open gap (in source, not expired) with an Attributed provider in cdxp.BulkProviderGap gets
            one row per distinct value:
              PROVIDER_ID          the Attributed row's PayerProviderId
-             NPI                  cdxp.Provider.NPI, through the row's ProviderKey
-             PROVIDER_TIN         the payer's record's TIN (cdxp.PayerProvider, on the gap's LOB and PayerProviderId)
+             NPI                  the payer's record's NPI as sent (the provider table, on the gap's LOB and
+                                  PayerProviderId, or ProviderKey for a payer that sends only NPIs)
+             PROVIDER_TIN         that record's TIN
              GROUP_ID             that record's group ID and group name
              MED_CENTER           its med center
              RISK_CONTRACT_CLASS  its risk contract class
