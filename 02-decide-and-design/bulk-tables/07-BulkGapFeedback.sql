@@ -1,6 +1,6 @@
 /*
-    cdxp.BulkGapFeedback: one row per response to a gap. Many to one with cdxp.BulkGap. Every response is kept;
-    IsCurrent marks the latest one per origin.
+    cdxp.BulkGapFeedback: one row per response to a gap. Many to one with cdxp.BulkGap. Every response is kept, and
+    the current one is the latest by FeedbackDate.
 
     Replaces:
       C8    the PFA set on alert.Detail (Feedback, FeedbackDate, FeedbackSourceId, FeedbackNpi, FeedbackDiagnosisCode)
@@ -41,23 +41,20 @@ CREATE TABLE [cdxp].[BulkGapFeedback] (
 	[Notes]                 VARCHAR(MAX)      NULL,             -- FROM C8 alert.Detail.ExternalFeedbackNotes; FROM CDXP cdxp.Gap.GapComment
 
 	-- Where it came from
-	[FeedbackOrigin]           VARCHAR(50)       NOT NULL,      -- FROM C8 alert.FeedbackSource.FeedbackBrokerName via alert.Detail.FeedbackSourceId (PFA, CDXP, VIM Bulk)
+	[FeedbackOrigin]        VARCHAR(50)       NOT NULL,         -- FROM C8 alert.FeedbackSource.FeedbackBrokerName via alert.Detail.FeedbackSourceId (PFA, CDXP, VIM Bulk)
 	-- EHR
-	[TargetAppKey]         UNIQUEIDENTIFIER  NULL,          -- FROM C8 alert.Detail.FeedbackSourceId -> alert.FeedbackSource
+	[TargetAppKey]          TINYINT           NULL,             -- NEW -> cdxp.TargetApp (VPI, Athena MOC, VIM, VPI Overlay); FROM C8 alert.Detail.FeedbackSourceId -> alert.FeedbackSource
 	-- Add a value for PFA, records which front-end feedback came from
 
 
 	-- Who responded
-	[RespondingProviderKey] BIGINT      NULL,             -- NEW -> cdxp.Provider; FROM CDXP cdxp.Gap.ProviderNPIKey; FROM C8 alert.Detail.FeedbackNpi VARCHAR(45) (resolved by NPI)  
-	-- Add FeedbackUserID
-	[FeedbackUser]          NVARCHAR(256)     NULL,             -- FROM C8 alert.Detail.UpdatedBy today (FeedbackUser on jk/pfa-refactor)
+	[RespondingProviderKey] BIGINT            NULL,             -- NEW -> cdxp.Provider; FROM CDXP cdxp.Gap.ProviderNPIKey; FROM C8 alert.Detail.FeedbackNpi VARCHAR(45) (resolved by NPI)
+	[FeedbackUserId]        NVARCHAR(450)     NULL,             -- FROM C8 alert.Detail.FeedbackSelectedBy: the PFA user's AspNetUsers.Id; NULL where C8 writes EHR or BULK
+	[FeedbackUser]          NVARCHAR(256)     NULL,             -- FROM C8 alert.Detail.FeedbackUser: the PFA user's username
 	[FeedbackUserFullName]  NVARCHAR(256)     NULL,             -- NEW: the responder's full name, saved with the response; C8 keeps only the username
 
 	-- Content pointer
 	[FeedbackFileLocation]  VARCHAR(500)      NULL,             -- FROM CDXP cdxp.Gap.FeedbackFileLocation; goes away once content lives in SQL
-
-	-- State
-	[IsCurrent]             BIT               NOT NULL,         -- NEW: the latest response from this origin
 
 	-- Audit
 	[InsertDate]            DATETIME          NOT NULL,         -- NEW, CDXP audit pattern

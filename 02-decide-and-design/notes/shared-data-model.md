@@ -23,6 +23,9 @@
     - [`cdxp.BulkGapFeedback`](../bulk-tables/07-BulkGapFeedback.sql): every response to a gap, from the PFA, EHRs, and payers.
     - [`cdxp.BulkGapAuditLog`](../bulk-tables/04-BulkGapAuditLog.sql): each change to a gap's status or lifecycle.
     - [`cdxp.BulkGapAccess`](../bulk-tables/10-BulkGapAccess.sql): the provider identifiers a gap is visible under, which decide what Provider SSO users see.
+  - **Reference lookups**, keyed on a clinical code's system and value, and not partitioned:
+    - [`cdxp.QualityMeasure`](../bulk-tables/11-QualityMeasure.sql): a quality measure's names, description, category, and call to action.
+    - [`cdxp.DiagnosisCode`](../bulk-tables/12-DiagnosisCode.sql): an ICD-10 code's description.
   - **Partitioning:** [`psPartitionByPayerKey`](../bulk-tables/00-PayerPartition.sql), one partition per tenant. PA-4's version replaces it.
   - **Not drafted here:** PA-4's runs and files (`BulkTracker`, `BulkFileDetail`) and its member-site matching tables, in [payer-automation-bulk-tables.md](payer-automation-bulk-tables.md). Evidence has no tables (see **Decided**).
 - **The questions that would simplify it most:**

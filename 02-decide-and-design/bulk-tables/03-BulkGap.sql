@@ -54,8 +54,9 @@ CREATE TABLE [cdxp].[BulkGap] (
 	-- Load lineage
 	[FileDetailKey]            BIGINT            NULL,             -- FROM CDXP cdxp.<Payer>Gap.FileDetailKey (NOT NULL there; cdxp.<Payer>FileDetail today)
 	[TrackerKey]               INT               NULL,             -- FROM CDXP cdxp.<Payer>Gap.TrackerKey (the run; cdxp.<Payer>Tracker today)
-	[FirstStagingRunId]        UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.FirstStagingRunId
-	[LastStagingRunId]         UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.LastStagingRunId
+	-- C8 staging runs, kept while RAA's imports into CDXP still run as staging runs
+	[FirstStagingRunId]        UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.FirstStagingRunId: the run that first loaded the gap
+	[LastStagingRunId]         UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.LastStagingRunId: the current run, the latest that loaded it
 
 	-- Audit
 	[InsertDate]               DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>Gap.InsertDate; FROM C8 alert.Detail.CreateDate DATETIME2

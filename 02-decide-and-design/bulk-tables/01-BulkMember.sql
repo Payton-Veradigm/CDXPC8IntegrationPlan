@@ -88,9 +88,9 @@ CREATE TABLE [cdxp].[BulkMember] (
 	-- Delivery (CDXP)
 	[PayerPathDeltaGapCount]      INT               NULL,             -- FROM CDXP cdxp.<Payer>Member.PayerPathDeltaGapCount
 
-	-- Load lineage
-	[FirstStagingRunId]           UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.FirstStagingRunId
-	[LastStagingRunId]            UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.LastStagingRunId
+	-- Load lineage: C8 staging runs, kept while RAA's imports into CDXP still run as staging runs
+	[FirstStagingRunId]           UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.FirstStagingRunId: the run that first loaded the member
+	[LastStagingRunId]            UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.LastStagingRunId: the current run, the latest that loaded it
 
 	-- Audit
 	[InsertDate]                  DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>Member.InsertDate; FROM C8 alert.Member.CreateDate DATETIME2

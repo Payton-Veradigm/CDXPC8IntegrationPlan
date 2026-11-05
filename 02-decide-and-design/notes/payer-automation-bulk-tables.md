@@ -35,7 +35,8 @@
 - **C8 publishes become tracker rows** (PA-23): the publish ID and sign-off move onto `BulkTracker`, and the files are parsed only once the publish is signed off.
 - **Expiry follows the run** (PA-18): a per-payer mode, run-wide or tracker-scoped, and only a Parsed file counts as complete.
   - Today's procedures are payer-wide either way: some payers expire open gaps the latest tracker didn't carry, and the C8 family expires open gaps not on the latest publish.
-- **What a C8 staging run does that a tracker doesn't**, if RAA's data comes straight into CDXP's process:
+- **For now, RAA's imports keep C8's staging runs.** They come into CDXP the way they came into TRX for a while, so members and gaps keep `FirstStagingRunId` and `LastStagingRunId` (decided 2026-11-05, Payton Obrycki).
+- **What a C8 staging run does that a tracker doesn't**, for when RAA's data comes straight into CDXP's process:
   - Scope: a staging run is one LOB and alert type, and only that scope goes out of source. A tracker has neither, so a quality-only run would expire risk gaps.
   - A CTQ hold on staged data: sign-off holds files before they're parsed. That suits C8's publishes, which CTQ already approved, but leaves nothing in SQL for CTQ to review.
   - The data month that member-month snapshots key on, and a link from C8's `StagingRunId` to tracker rows for migrated history.
@@ -53,6 +54,7 @@ Our drafts are in [../bulk-tables/](../bulk-tables/). The C8 side should follow 
   - `BulkGapDetail` (gap content) and `BulkGapFeedback`. Evidence has no tables; it lives in blob storage only.
   - `BulkMemberProviderStatus` (Not Seen Here, from C8's `MemberProviderStatus`).
   - `BulkGapAccess` (which provider identifiers each gap is visible under, from C8's `alert.Mapping`).
+  - Reference lookups for the clinical codes: `QualityMeasure` (a measure's names, description, category and call to action) and `DiagnosisCode` (an ICD-10 code's description).
   - Not modeled yet: documents and member months.
 - **The save:** `spSaveBulkGapBatch`'s JSON contract and checks have to grow to carry detail, providers, and the C8 columns. Otherwise PA-8 can't fill the new tables.
 
@@ -70,9 +72,10 @@ Our drafts are in [../bulk-tables/](../bulk-tables/). The C8 side should follow 
 - **The status only moves up.** That fits CDXP's delivery status. C8's lifecycle (`IsInSource`, `IsExpired`) and its derived Open/Responded/Closed status need their own columns and rules, not `GapStatusKey`.
 ## What PA settles for us
 
-- **S7 (one load table):** yes. `BulkTracker` (runs, including C8 publishes) and `BulkFileDetail` (files). C8's staging run IDs should map to tracker rows rather than sit on every gap.
+- **S7 (one load table):** yes. `BulkTracker` (runs, including C8 publishes) and `BulkFileDetail` (files). C8's staging run IDs stay on members and gaps for now, while RAA's imports still run as staging runs (see Runs).
 - **Partitioning and keys:** use PA-4's scheme and its (`PayerPartitionKey`, identity) clustering.
 - **Clinical code table:** keep `BulkGapClinicalCode`, which answers our open question. Draft: [09-BulkGapClinicalCode.sql](../bulk-tables/09-BulkGapClinicalCode.sql).
   - `BulkGapDetail`'s code columns moved there: `ConditionCode`, `ModelName`, `ModelNo`, `DiagnosisCode`, and `MeasureNameModel`.
-  - `ShortMeasureName` stays. It's the bulk format's measure code, but C8's measure code is `SourceMeasureId`, and C8's short name is a separate label.
+  - The descriptions moved to lookups keyed on the code: `ShortMeasureName`, `MeasureName`, `MeasureDescription`, `MeasureCategoryName` and `CallToAction` to `QualityMeasure`, and `DiagnosisDescription` to `DiagnosisCode`.
+  - In `QualityMeasure`, the short name is a column of its own: it's the bulk format's measure code, but C8's measure code is `SourceMeasureId`, and C8's short name is a separate label.
   - C8 gaps need their codes in the save's `Codes` array: the HCC and model, the primary diagnosis, or the measure.
