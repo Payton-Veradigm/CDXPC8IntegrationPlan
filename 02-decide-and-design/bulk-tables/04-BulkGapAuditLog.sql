@@ -3,8 +3,7 @@
 
     Base:    CDXP's per-payer audit log, cdxp.<Payer>GapAuditLog, which logs every GapStatusKey change.
     Laid in: the alert.Detail lifecycle columns (C8) whose changes C8 tracks today in alert.DetailHistory (trigger tr_DetailHistory).
-    Feedback changes aren't logged here yet. cdxp.BulkGapDetail keeps one response per gap, and whether this log
-    keeps the ones it replaces is an open question there.
+    Feedback history isn't logged here: every response is its own row in cdxp.BulkGapFeedback.
 
     Pseudo-code: no constraints or indexes. Partitioned on PayerPartitionKey (00-PayerPartition.sql).
 */
@@ -32,3 +31,4 @@ CREATE TABLE [cdxp].[BulkGapAuditLog] (
 	[InsertDate]            DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>GapAuditLog.InsertDate; FROM C8 alert.DetailHistory.UpdateDate
 	[InsertedBy]            NVARCHAR(128)     NOT NULL          -- FROM CDXP cdxp.<Payer>GapAuditLog.InsertedBy; FROM C8 alert.Detail.UpdatedBy
 );
+
