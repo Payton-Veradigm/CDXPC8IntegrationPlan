@@ -37,14 +37,12 @@ CREATE TABLE [cdxp].[BulkGap] (
 
 	-- Payer gap identifiers
 	[PayerGapId]               VARCHAR(150)      NULL,             -- FROM CDXP cdxp.<Payer>Gap.PayerGapId (NOT NULL there); FROM C8 alert.Detail.PartnerGapId VARCHAR(60)
-	[InternalGapId]            VARCHAR(MAX)      NULL,             -- FROM C8 alert.Detail.InternalGapId (fallback when the payer sends no gap ID)
+	-- RAA doesn't send PayerGapID, so we need a detereministic way to generate PayerGapID, similar to Humana
 
 	-- Delivery status (CDXP)
 	[GapStatusKey]             TINYINT           NOT NULL,         -- FROM CDXP cdxp.<Payer>Gap.GapStatusKey -> cdxp.GapStatus
 
 	-- Program lifecycle (C8)
-	[IsInSource]               BIT               NOT NULL,         -- FROM C8 alert.Detail.IsInSource (isActive before feature/pfa-refactor)
-	[IsExpired]                BIT               NOT NULL,         -- FROM C8 alert.Detail.IsExpired: payer-configured expiry, apart from leaving the source
 	[ExpiredDate]              DATETIME2         NULL,             -- FROM C8 alert.Detail.ExpiredDate
 	[ClosedDate]               DATETIME2         NULL,             -- NEW: when IsInSource went to 0 or IsExpired went to 1, NULL while open; C8 has no column for it
 
@@ -54,9 +52,7 @@ CREATE TABLE [cdxp].[BulkGap] (
 	-- Load lineage
 	[FileDetailKey]            BIGINT            NULL,             -- FROM CDXP cdxp.<Payer>Gap.FileDetailKey (NOT NULL there; cdxp.<Payer>FileDetail today)
 	[TrackerKey]               INT               NULL,             -- FROM CDXP cdxp.<Payer>Gap.TrackerKey (the run; cdxp.<Payer>Tracker today)
-	-- C8 staging runs, kept while RAA's imports into CDXP still run as staging runs
-	[FirstStagingRunId]        UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.FirstStagingRunId: the run that first loaded the gap
-	[LastStagingRunId]         UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Detail.LastStagingRunId: the current run, the latest that loaded it
+	-- RAA will have to move to a tracker
 
 	-- Audit
 	[InsertDate]               DATETIME          NOT NULL,         -- FROM CDXP cdxp.<Payer>Gap.InsertDate; FROM C8 alert.Detail.CreateDate DATETIME2

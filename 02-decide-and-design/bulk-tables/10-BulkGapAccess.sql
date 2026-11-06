@@ -56,3 +56,11 @@ CREATE TABLE [cdxp].[BulkGapAccess] (
 	[LastUpdated]         DATETIME          NOT NULL,         -- NEW, CDXP audit pattern
 	[LastUpdatedBy]       NVARCHAR(128)     NOT NULL          -- NEW, CDXP audit pattern
 );
+
+
+[Tracker]
+
+  [TrackerKey]
+  [PayerKey]
+  [CohortID] -- Only expire based on other IngestionSource trackers for the same payer
+  -- Unique value, compared to payer-trackers with the same IngestionID for expiration

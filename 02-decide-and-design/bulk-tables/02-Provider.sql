@@ -25,13 +25,13 @@ CREATE TABLE [cdxp].[Provider] (
 	[PayerPartitionKey]             SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
 	[ProviderKey]                   BIGINT            NULL,             -- NEW -> cdxp.Provider, which has the NPI, name and taxonomy classification; NULL when the payer sent no NPI
 	[LineOfBusinessKey]             TINYINT           NULL,             -- FROM C8 alert.Provider.LOB VARCHAR(10); part of C8's unique key (LOB, ProviderId), which finds the gap's provider
-	[PayerProviderId]               VARCHAR(100)      NULL,             -- FROM C8 alert.Provider.ProviderId (NOT NULL in C8); FROM CDXP bulk row.ProvId; alert.Member.PCPId points at it; access key PROVIDER_ID
+	-- Get rid of LOB on provider
 
 	-- Provider identifiers
 	[NPI]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.NPI; FROM CDXP bulk row.Npi; access key NPI, kept as sent so it still matches when it isn't in cdxp.Provider
 	[AccessTIN]                     VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN; FROM CDXP the V5.8 spec's TIN, recorded at ingestion; access key PROVIDER_TIN
 	-- Used for Gap Access, not to be confused with the tin associated with the providers sites.
-	-- One to many on TIN, a single NPI could have multiple TIN's as far as access
+	-- One to many on TIN, a single NPI could have multiple TIN's as far as access, ensure naming clarifies usecase
 
 	-- Name as the payer sent it; cdxp.Provider.ProviderName is the NPI's
 	[FirstName]                     NVARCHAR(45)      NULL,             -- FROM C8 alert.Provider.FirstName
@@ -68,9 +68,6 @@ CREATE TABLE [cdxp].[Provider] (
 
 	-- Crosswalks (C8's manual ID corrections; keep only if alert.ApplyProviderCrosswalk is still run)
 	[ProviderCrosswalkId]           UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Provider.ProviderCrosswalkId
-
-	-- Load lineage
-	[StagingRunId]                  UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Provider.StagingRunId
 
 	-- Audit
 	[InsertDate]                    DATETIME          NOT NULL,         -- NEW, CDXP audit pattern; FROM C8 alert.Provider.CreateDate DATETIME2
