@@ -26,8 +26,6 @@ CREATE TABLE [cdxp].[DiagnosisCode] (
 	-- CDXP already has this, look to reuse that
 
 
-
-
 	-- Audit
 	[InsertDate]            DATETIME          NOT NULL,         -- NEW, CDXP audit pattern
 	[InsertedBy]            NVARCHAR(128)     NOT NULL,         -- NEW, CDXP audit pattern

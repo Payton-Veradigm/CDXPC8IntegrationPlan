@@ -2,86 +2,94 @@
 
 [Back to the one-page plan](one-page.md)
 
-**About 43 weeks with 3 devs per team, or about 46 weeks with 2, from the start of phase 1.** That's roughly 10 to 11 months.
+**About 40 weeks from 2026-11-05, to mid-August 2027.** The first customer moves to the new backend in late March 2027.
 
-- Most of the calendar is waiting, not work: design decisions, monthly side-by-side cycles, and soaks.
-- A third dev on each team only shortens the build stretches (phase 3 and phase 5's build), so it saves about 3 weeks.
-- Over the whole plan, this work fills about a third (3 devs) to half (2 devs) of CDXP's assumed time, and about a fifth to a quarter of Collaborate's.
+- Most of the calendar is dependencies and waiting, not work: monthly side-by-side cycles and soaks.
+- Team sizes vary, so the calendar isn't tied to a dev count. Where a stretch is set by work, its length comes from each team's sizing.
 
 ## Assumptions
 
-- **Capacity:** each dev gives about 30 hours a week to this plan. The rest goes to support, meetings, and other work. At full time (40 hours), the end moves to about 42 weeks (3 devs) or 44 (2 devs).
-- **Hours:** the dev and decision hours in each `steps.md`, as they stand today.
+- **Week 0** is 2026-11-05. Each week starts on a Thursday.
+- **The shared data model is agreed** (phase 2), as of 2026-11-05.
+- **Hours:** the dev and decision hours in each `steps.md`, as they stand today. They measure effort, not calendar time.
 - **Merged team:** both teams together, from phase 8.
-- **Week 0** is the start of phase 1. The CDXP team's project (spec builder, ingestor, and consolidated tables) runs before or alongside phases 1 and 2, and has to be done by week 8. If it isn't, everything after week 8 moves out by the same amount.
-- **Compliance** signs off on shared tables by week 8, before anything is built.
-- **Collaborate's master-record removal** is finished by about week 4 (3 devs) or 5 (2 devs), and rolled out through the weekly releases by week 10 or 11. That leaves about 4 to 6 weeks of slack before the first side-by-side run.
+- **The CDXP team's Payer Automation build** (Brian) is done by week 3. The shared data model build starts during it (week 1): Brian folds those changes into his unified data model. The RAA intake buildout starts after it.
+- **Collaborate's master-record removal** (Jason): dev work is done by mid-December 2026 (week 6), and it's live in TRX by mid-January 2027 (week 10).
+  - Phase 7's build, starting with the Portal database copy, begins at dev done (week 6).
+  - Phase 5's side-by-side runs wait for it to be live (week 10).
+  - The CDXP-side work doesn't wait on it: phase 3 and the RAA intake buildout.
+- **The RAA intake buildout** will likely take longer than first sized. It's planned at weeks 3 to 10. Every week past week 10 delays the first payer's side-by-side run and the first customer move by the same amount.
+- **No allowance** for the December holidays.
 - **Waits,** taken from the notes, or assumed where the notes leave them open:
-  - Phase 1: about 2 weeks to name owners, get DBOps's baseline, and start the compliance review.
-  - Phase 2: about 6 weeks of weekly joint sessions for about 20 decisions, with Security and Compliance.
-  - Phase 3: at least 3 weeks, for its decisions with DevOps, DBOps, Security, and Compliance.
   - First payer: two full monthly cycles side by side, Stage and then Prod.
-  - Other payers: two waves of about 4. Each wave runs one monthly cycle, plus 2 weeks to work the differences down.
+  - Other payers: continuous, payer by payer, about 12 weeks in all.
   - Each customer's soak after its move: 4 weeks. The length is still to decide.
-  - Retirement: about 3 weeks for DBOps and Compliance.
+  - Retirement: about 3 weeks for DBOps.
 
 ## What overlaps
 
-- **The master-record removal** (phase 1) runs alongside phases 1 to 3, and has to be live in TRX before the first side-by-side run.
-- **Phase 4** (CDXP's bulk payers) runs while phase 5's first payer is side by side. It's off the critical path, except re-pointing CDXP's readers, which has to be done before the first move.
-- **Phase 6** runs alongside phase 5's build and first cycle, and finishes before the first move.
-- **Phase 7's build** runs during phase 5: Collaborate from week 11, and CDXP once phase 5's build is done.
-- **Phase 7's moves** follow each wave's parity sign-off, so moves and side-by-side runs overlap.
+- **Weeks 0 to 3:** phase 6 (Josh and Payton, 3 weeks or less), the CDXP team's Payer Automation build (Brian), and the initial HNA bulk uploads (Payton) run together. So C8 devs work in CDXP's flow before any shared build starts.
+- **Phase 3** (the shared data model build, about 5 weeks) runs from week 1 to week 6, alongside Payer Automation.
+- **Phase 4's migration** starts once Payer Automation is done, and overlaps the rest of the shared data model build (weeks 3 to 8). Once that build is done, the consolidated tables are pushed to HNA over about 3 weeks (weeks 6 to 9). Re-pointing CDXP's readers has to be done before the first customer move.
+- **Phase 5's build is the RAA intake buildout.** It runs after Payer Automation, weeks 3 to 10. Its side-by-side runs start once phase 3, the RAA intake, and the master-record removal are done, and continue payer by payer.
+- **Phase 7's build** starts with the Portal database copy at Jason's dev done (week 6), after phase 3, and takes 5 to 6 weeks. PFA verification follows, done by week 16.
+- **The critical path** runs through the master-record removal going live and the RAA intake (both week 10), then the first payer's two side-by-side cycles, then the first customer move. Phase 7's build and PFA verification have about 4 weeks of slack before it.
+- **Phase 7's moves** follow the first payer's parity sign-off, then each payer's, so moves and side-by-side runs overlap.
 - **Phase 8** follows each customer's soak, so it overlaps the later moves.
 - **Phase 9** starts once the last customer's old paths are off.
 
 ## Week by week
 
-| Phase or stretch | 3 devs per team | 2 devs per team | Pace set by |
+| Phase or stretch | Weeks | Dates | Pace set by |
 |---|---|---|---|
-| 1. Prerequisites | Weeks 0 to 2 | Weeks 0 to 2 | Owners, DBOps, the compliance review |
-| 1. Master-record removal (Collaborate) | 0 to 10 | 0 to 11 | Collaborate's work, then the weekly releases |
-| 2. Design the shared data model | 2 to 8 | 2 to 8 | Decisions |
-| 3. Implement the shared data model | 8 to 11 | 8 to 11 | CDXP's work (206 h) |
-| 5. Build the cut-in | 11 to 14 | 11 to 17 | CDXP's work (311 h) |
-| 6. Agree how we build and release | 11 to 19 | 11 to 20 | Decisions |
-| 7. Build for the Portal and PFA move | 11 to 23 | 11 to 26 | Work, alongside phase 5 |
-| 5. First payer side by side | 14 to 23 | 17 to 26 | Two monthly cycles |
-| 4. Move CDXP's bulk payers | 14 to 28 | 17 to 31 | CDXP's work, then a soak before the per-payer tables retire |
-| 5. Other payers side by side | 23 to 35 | 26 to 38 | Two waves |
-| 7. Moves and soaks | 23 to 40 | 26 to 43 | A 4-week soak after each move |
-| 8. Turn off the old paths | 28 to 40 | 31 to 43 | Each customer's soak |
-| 9. Retire the old pieces | 40 to 43 | 43 to 46 | DBOps and Compliance |
+| 1. Prerequisites | 0 to 2 | Nov 5 to Nov 19 | Owners, DBOps |
+| 6. Agree how we build and release | 0 to 3 | Nov 5 to Nov 26 | Decisions, 3 weeks or less (Josh and Payton) |
+| CDXP team: Payer Automation build | 0 to 3 | Nov 5 to Nov 26 | CDXP team project (Brian) |
+| Initial HNA bulk uploads | 0 to 3 | Nov 5 to Nov 26 | Payton, outside the plan's hours |
+| 1. Master-record removal | 0 to 10 | Nov 5 to Jan 14 | Collaborate's work (Jason): dev done at week 6 (Dec 17), then the weekly releases |
+| 3. Implement the shared data model | 1 to 6 | Nov 12 to Dec 17 | CDXP's work (198 h), folded into Payer Automation's unified model |
+| SpecBuilder training (Ops and Product) | 3 to 7 | Nov 26 to Dec 24 | Outside the plan's hours |
+| 5. RAA intake buildout (phase 5's build) | 3 to 10 | Nov 26 to Jan 14 | CDXP's work (311 h), likely to run long |
+| 4. Move CDXP's bulk payers | 3 to 8 | Nov 26 to Dec 31 | CDXP's work (Brian and Payton), after Payer Automation, overlapping the shared model build |
+| 4. Push the PA and shared model tables to HNA | 6 to 9 | Dec 17 to Jan 7 | CDXP's work (24 h), about 3 weeks |
+| 4. Retire the per-payer tables | 21 to 23 | Apr 1 to Apr 15 | A soak after the migration |
+| 7. Build for the Portal and PFA move | 6 to 12 | Dec 17 to Jan 28 | Work: 5 to 6 weeks from Jason's dev done, starting with the Portal database copy (60 h) |
+| 7. Verify the PFA on the new backend | 12 to 16 | Jan 28 to Feb 25 | Collaborate's testing |
+| 5. First payer side by side | 10 to 19 | Jan 14 to Mar 18 | Two monthly cycles, after the master-record removal |
+| 5. Other payers side by side | 19 to 31 | Mar 18 to Jun 10 | Continuous, payer by payer |
+| 7. Moves and soaks | 20 to 37 | Mar 25 to Jul 22 | A 4-week soak after each move |
+| 8. Turn off the old paths | 25 to 37 | Apr 29 to Jul 22 | Each customer's soak |
+| 9. Retire the old pieces | 37 to 40 | Jul 22 to Aug 12 | DBOps |
 
-## Chart (3 devs per team)
+## Chart
 
 ```text
-                          0    5    10   15   20   25   30   35   40   45
-Week                      |    |    |    |    |    |    |    |    |    |
+                          0    5    10   15   20   25   30   35   40
+Week                      |    |    |    |    |    |    |    |    |
 1 Prerequisites           ==
-1 Master-record removal   ####......
-2 Design                    ======
-3 Implement                       ###
-5 Build the cut-in                   ###
-6 Build and release                  ========
-7 Build for the move                 ############
-5 First payer, 2 cycles                 .........
-4 CDXP's bulk payers                    ##############
-5 Other payers, 2 waves                          ............
-7 Moves and soaks                                .................
-8 Old paths off                                       ............
-9 Retire                                                          ...
+6 Build and release       ===
+PA build (CDXP team)      ###
+HNA bulk uploads          ###
+1 Master-record removal   ######....   (dev done at week 6)
+3 Implement                #####
+SpecBuilder training         ====
+5 RAA intake buildout        #######
+4 CDXP's bulk payers         #####
+4 HNA push, PA tables           ###
+7 Build for the move            ######
+7 Verify the PFA                      ....
+5 First payer, 2 cycles             .........
+5 Other payers                               ............
+4 Retire per-payer tables                      ..
+7 Moves and soaks                             .................
+8 Old paths off                                    ............
+9 Retire                                                       ...
 ```
 
 - `=` decisions set the pace, `#` work sets the pace, and `.` waiting sets the pace (cycles, soaks, and sign-offs).
-- With 2 devs per team, everything after phase 3 finishes about 3 weeks later.
 
 ## Ways to pull the date in
 
 - Start the other payers once the first payer's Stage cycle matches, instead of after its Prod sign-off: about 4 weeks.
-- Cut in the other payers in one wave instead of two: about 6 weeks, with more risk.
 - A 2-week soak instead of 4: about 2 weeks.
-- Two design sessions a week in phase 2: about 2 to 3 weeks.
-- Together, these bring it to about 28 weeks (6 to 7 months), with more risk.
-- Starting phase 4 during phase 2, if the CDXP team's tables are ready, doesn't move the end date. It does take load off CDXP during phase 5.
-- Cutting effort hours, such as the C8-family change in phase 4, frees people up, but barely moves the end date. The waits set it.
+- Cutting effort hours frees people up, but barely moves the end date. The dependencies and waits set it.

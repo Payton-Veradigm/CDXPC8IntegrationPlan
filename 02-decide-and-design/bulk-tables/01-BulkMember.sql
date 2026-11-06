@@ -14,8 +14,6 @@ CREATE TABLE [cdxp].[BulkMember] (
 	[PayerPartitionKey]           SMALLINT          NOT NULL,         -- NEW: cdxp.Payer.PayerKey
 	[MemberKey]                   BIGINT            IDENTITY(1, 1),   -- FROM CDXP cdxp.<Payer>Member.MemberKey
 	[AlertMemberId]               UNIQUEIDENTIFIER  NULL,             -- FROM C8 alert.Member.AlertMemberId (TRX PK; FHIR Patient.Id)
-	[LineOfBusinessKey]           TINYINT           NULL,             -- FROM C8 alert.Member.LOB VARCHAR(10), mapped to cdxp.LineOfBusiness; CDXP keeps LOB on the gap only
-	-- A member can have gaps form multiple LOBs, correct?
 
 	-- Member identifiers (PHI)
 	[MemberID]                    VARBINARY(256)    NOT NULL,         -- FROM CDXP cdxp.<Payer>Member.MemberID; FROM C8 alert.Member.MemberId VARCHAR(50)

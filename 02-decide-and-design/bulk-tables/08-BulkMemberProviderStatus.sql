@@ -3,7 +3,7 @@
     Many to one with cdxp.BulkMember. Every assertion is kept; IsCurrent marks the latest per member and provider.
 
     Base:     alert.MemberProviderStatus (C8, feature/pfa-refactor). CDXP has no equivalent.
-    Replaces: its history table, alert.MemberProviderStatusHistory. A change is a new row, as in cdxp.BulkGapFeedback.
+    Replaces: its history table, alert.MemberProviderStatusHistory. A change is a new row.
 
     "Not seen here" is one practice's claim, so it's keyed on the provider as well as the member. C8 keys it on the
     payer's provider ID, so two payer IDs under one NPI keep separate rows.

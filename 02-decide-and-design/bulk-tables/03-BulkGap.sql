@@ -3,14 +3,14 @@
 
     Elsewhere:
       content (FHIR-level fields, DetailProperties)  -> cdxp.BulkGapDetail
-      feedback (PFA, EHR, payer responses)           -> cdxp.BulkGapFeedback
+      feedback (one response: PFA, EHR, or payer)    -> cdxp.BulkGapDetail
       providers and their roles                      -> cdxp.BulkProviderGap (replaces cdxp.<Payer>Gap.NPI)
       clinical codes (HCC, ICD-10, measure)          -> cdxp.BulkGapClinicalCode (PA-4)
       evidence (notes, claims, medications, procedures, diagnostics) -> blob storage only, in the bundle at FileLocation
 
     Base:    CDXP's per-payer gap table, cdxp.<Payer>Gap, which PA-4 consolidates as cdxp.BulkGap.
-    Laid in: alert.Detail (C8), marked FROM C8, minus DetailProperties (BulkGapDetail), the feedback columns
-             (BulkGapFeedback), and AlertCompletedDateId (retired).
+    Laid in: alert.Detail (C8), marked FROM C8, minus DetailProperties and the feedback columns (both in
+             BulkGapDetail), and AlertCompletedDateId (retired).
 
     The lifecycle, period, and GapSource columns are from feature/pfa-refactor, which isn't in Prod yet.
 

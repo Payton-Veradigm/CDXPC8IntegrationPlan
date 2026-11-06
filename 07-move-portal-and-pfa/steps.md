@@ -6,6 +6,8 @@ Once a customer's data matches TRX, Collaborate points the Portal and PFA at the
 
 ## Build
 
+Starts once phase 3 is done and the dev work on Collaborate's master-record removal is done (mid-December 2026), beginning with the Portal database copy. Takes 5 to 6 weeks.
+
 - [ ] [Build the reads and writes the Portal and PFA need](notes/access-contract.md) (C8 16 + CDXP 80 dev h)
 - [ ] [Add a per-customer switch where the Portal and PFA connect](notes/storage-switch.md) (C8, 24 dev h)
 - [ ] [Point the PFA screens and feedback at the new source](notes/pfa-screens.md) (C8, 40 dev h)
@@ -22,7 +24,6 @@ Once a customer's data matches TRX, Collaborate points the Portal and PFA at the
 
 - [ ] [**Decide** how cutover and rollback work](notes/cutover-and-rollback.md) (Both, 3 decision h each)
 - [ ] [Move the first customer, then the rest](notes/move-customers.md) (C8 40 + CDXP 16 dev h)
-
 ## Reporting and onboarding
 
 - [ ] [**Decide** where reporting and analytics read from](notes/reporting-target.md) (Both, 3 decision h each, with Team Banyan)

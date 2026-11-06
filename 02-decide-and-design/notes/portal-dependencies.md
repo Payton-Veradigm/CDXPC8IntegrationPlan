@@ -16,3 +16,4 @@
   - Copy the reference data and rules.
   - Retire the FHIR Publish rules once FHIR Publish stops, as customers move (phase 7).
   - Decide the permission and roster data with Security.
+- **Decided:** move the whole Portal database into CDXP in phase 3, instead of copying items into `cdxp` (2026-11-05, Payton Obrycki). See [the move](../../03-build-foundation/notes/portal-replacement.md).

@@ -29,8 +29,9 @@ CREATE TABLE [cdxp].[Provider] (
 
 	-- Provider identifiers
 	[NPI]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.NPI; FROM CDXP bulk row.Npi; access key NPI, kept as sent so it still matches when it isn't in cdxp.Provider
-	[RAAFilteringTIN]                           VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN; FROM CDXP the V5.8 spec's TIN, recorded at ingestion; access key PROVIDER_TIN
+	[AccessTIN]                     VARCHAR(45)       NULL,             -- FROM C8 alert.Provider.TIN; FROM CDXP the V5.8 spec's TIN, recorded at ingestion; access key PROVIDER_TIN
 	-- Used for Gap Access, not to be confused with the tin associated with the providers sites.
+	-- One to many on TIN, a single NPI could have multiple TIN's as far as access
 
 	-- Name as the payer sent it; cdxp.Provider.ProviderName is the NPI's
 	[FirstName]                     NVARCHAR(45)      NULL,             -- FROM C8 alert.Provider.FirstName

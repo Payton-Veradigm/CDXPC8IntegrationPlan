@@ -21,7 +21,6 @@ Collaborate's master-record removal released, the CDXP team's project in place, 
 - [ ] [Baseline every TRX database](notes/baseline-trx.md) (C8, 4 dev h, with DBOps)
 - [ ] [Map Collaborate customers to CDXP payers](notes/customer-payer-crosswalk.md) (Both, 1 decision h each)
 - [ ] [List everything that reads or writes the data](notes/consumer-inventory.md) (C8 6 + CDXP 6 dev h)
-- [ ] [Start the compliance review](notes/compliance-review.md) (Both, 2 decision h each, with Compliance)
 - [ ] [Check with Team Banyan](notes/team-banyan.md) (C8, 1 decision h)
 
-**Phase total:** C8 122 dev h, 7 decision h | CDXP 6 dev h, 6 decision h | the CDXP team project isn't counted
+**Phase total:** C8 122 dev h, 5 decision h | CDXP 6 dev h, 4 decision h | the CDXP team project isn't counted

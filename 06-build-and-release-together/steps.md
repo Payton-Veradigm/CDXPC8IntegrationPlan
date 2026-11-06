@@ -2,7 +2,7 @@
 
 [Back to the one-page plan](../one-page.md)
 
-One way of working before the Portal and PFA depend on the new source. Runs alongside phase 5, and finishes before phase 7.
+One way of working before the Portal and PFA depend on the new source, so C8 devs work in CDXP's flow. Led by Josh and Payton, it takes 3 weeks or less, and finishes before phase 3 and phase 7's build start.
 
 - [ ] [Map both teams' current processes side by side](notes/current-sdlcs.md) (C8 4 + CDXP 4 dev h)
 - [ ] [**Decide** what code and schema the teams share](notes/code-sharing.md) (Both, 3 decision h each)

@@ -51,10 +51,10 @@ Our drafts are in [../bulk-tables/](../bulk-tables/). The C8 side should follow 
   - BulkGapAuditLog: lifecycle changes alongside status changes.
 - **Tables PA doesn't have:**
   - `PayerProvider` (the payer's record of a `cdxp.Provider`) and `BulkProviderGap` (a provider's role on a gap).
-  - `BulkGapDetail` (gap content) and `BulkGapFeedback`. Evidence has no tables; it lives in blob storage only.
+  - `BulkGapDetail` (gap content and its one feedback response). Evidence has no tables; it lives in blob storage only.
   - `BulkMemberProviderStatus` (Not Seen Here, from C8's `MemberProviderStatus`).
   - `BulkGapAccess` (which provider identifiers each gap is visible under, from C8's `alert.Mapping`).
-  - Reference lookups for the clinical codes: `QualityMeasure` (a measure's names, description, category and call to action) and `DiagnosisCode` (an ICD-10 code's description).
+  - Reference lookups for the clinical codes. These are CDXP's existing Snowflake-loaded tables, not PA's: `CTADiagCodeMapping` (measures), reworked to add payer rows and a description, and `ICDDiagCodeMapping` (ICD-10 and HCC descriptions), as it is, plus a one-row-per-code view.
   - Not modeled yet: documents and member months.
 - **The save:** `spSaveBulkGapBatch`'s JSON contract and checks have to grow to carry detail, providers, and the C8 columns. Otherwise PA-8 can't fill the new tables.
 
@@ -76,6 +76,6 @@ Our drafts are in [../bulk-tables/](../bulk-tables/). The C8 side should follow 
 - **Partitioning and keys:** use PA-4's scheme and its (`PayerPartitionKey`, identity) clustering.
 - **Clinical code table:** keep `BulkGapClinicalCode`, which answers our open question. Draft: [09-BulkGapClinicalCode.sql](../bulk-tables/09-BulkGapClinicalCode.sql).
   - `BulkGapDetail`'s code columns moved there: `ConditionCode`, `ModelName`, `ModelNo`, `DiagnosisCode`, and `MeasureNameModel`.
-  - The descriptions moved to lookups keyed on the code: `ShortMeasureName`, `MeasureName`, `MeasureDescription`, `MeasureCategoryName` and `CallToAction` to `QualityMeasure`, and `DiagnosisDescription` to `DiagnosisCode`.
-  - In `QualityMeasure`, the short name is a column of its own: it's the bulk format's measure code, but C8's measure code is `SourceMeasureId`, and C8's short name is a separate label.
+  - The descriptions moved to lookups keyed on the code: `ShortMeasureName`, `MeasureName`, `MeasureDescription`, `MeasureCategoryName` and `CallToAction` to `CTADiagCodeMapping`, and `DiagnosisDescription` to `ICDDiagCodeMapping`.
+  - In `CTADiagCodeMapping`, `MeasureShortName` is the measure code: the bulk format's `ShortMeasureName` and C8's `SourceMeasureId`. C8's own short name is a separate label, and whether to keep it is open.
   - C8 gaps need their codes in the save's `Codes` array: the HCC and model, the primary diagnosis, or the measure.

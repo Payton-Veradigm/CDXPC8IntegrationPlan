@@ -4,7 +4,9 @@
 
 Collaborate's payers flow through CDXP's process into the shared tables, one at a time, side by side with TRX, until the data matches.
 
-## Build the new process for Collaborate's data
+## RAA intake buildout
+
+Build Collaborate's data path into CDXP, including RAA's ANR feed. This starts after Payer Automation and doesn't wait on the master-record removal. It's likely to run longer than sized. If it finishes after mid-January, the first payer's side-by-side run and the first customer move slip with it.
 
 - [ ] [Implement Collaborate's filtering rules in CDXP's process](notes/c8-filtering.md) (C8 20 + CDXP 140 dev h)
 - [ ] [Apply CDXP's model checks as decided](notes/model-checks.md) (CDXP, 16 dev h)

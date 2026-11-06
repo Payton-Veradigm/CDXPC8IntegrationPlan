@@ -260,5 +260,5 @@ The biggest simplifications are S3, S9, and S12.
 - **S13. Period.** Use one identity period column instead of both `EvaluationPeriod` and `ProgramYear`?
 - **S14. Blob pointer.** Keep the blob pointer per load rather than per gap, or drop it? Evidence now lives only in blob storage (decided 2026-11-02), so it can't be dropped.
 - **S15. Expiry.** Take expiry from `IsExpired` alone? Should Hide, Unhide, and Updated be audit events rather than statuses?
-- **S16. Feedback.** One feedback column set with a source column, and past responses in `FeedbackHistory`?
+- **S16. Feedback.** One feedback column set with a source column, and past responses in `FeedbackHistory`? One set, on `BulkGapDetail`, shared by the PFA, EHRs, and payers (decided 2026-11-05). Keeping past responses is still open.
 - **S17. Visibility.** Derive "visible to point of care" instead of storing it on every gap?

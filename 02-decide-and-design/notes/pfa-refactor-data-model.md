@@ -61,10 +61,10 @@
   - Laid in `IsInSource` (replacing `IsActive`), `IsExpired`, `ExpiredDate`, `EvaluationPeriod`, `ProgramYear`, and `GapSource`.
   - `MasterId` can go, since Master is archived.
   - `AlertCompletedDateId` is already out.
-- **BulkGapFeedback:**
+- **BulkGapDetail (feedback):**
   - `FeedbackUser` is now a real C8 column.
-  - Drop `ExternalFeedbackSourceId`, which the branch removes. `FeedbackSource` comes from `ExternalSourceId` -> `alert.ExternalSource`.
-  - `alert.FeedbackHistory` confirms per-gap responses with history.
+  - The branch removes `ExternalFeedbackSourceId`. Which EHR answered is `ExternalSourceId` -> `alert.ExternalSource`.
+  - `alert.FeedbackHistory` keeps each replaced response. The shared model keeps one response per gap, so keeping that history is open.
 - **BulkProviderGap:**
   - The Attributed provider now comes from `alert.Detail.ProviderId`, not `alert.Master.ProviderId`. Exactly one per gap.
   - The PCP still comes from `alert.Member.PCPId`.

@@ -16,7 +16,7 @@
     cdxp.PayerProvider on the gap's LOB). At least one is set: some payer providers have no NPI.
 
     Providers tied to a single piece of evidence (claim provider, prescriber, performer) stay with the evidence in blob storage.
-    The provider who responded is on the feedback row (cdxp.BulkGapFeedback).
+    The provider who responded is on the gap's feedback (cdxp.BulkGapDetail.FeedbackProviderKey).
 
     Pseudo-code: no constraints or indexes. Partitioned on PayerPartitionKey (00-PayerPartition.sql).
 */

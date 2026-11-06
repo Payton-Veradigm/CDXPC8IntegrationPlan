@@ -10,8 +10,9 @@
                other condition code) and a Diagnosis row for the ICD-10 code
       quality  a Measure row (CodeSystem NCQA, PQA, or VPI; CodeValue the measure code)
     The spec and C8 send one diagnosis per gap, so cdxp.BulkGapDetail.DateOfService describes the one Diagnosis row.
-    The codes' descriptions are lookups: cdxp.DiagnosisCode for a Diagnosis row, cdxp.QualityMeasure for a quality
-    Measure row, both on CodeSystem and CodeValue.
+    The codes' descriptions are lookups. A risk gap's Measure and Diagnosis rows together find its row in
+    cdxp.ICDDiagCodeMapping, through the Measure row's GapModelKey. A quality Measure row finds its measure in
+    cdxp.CTADiagCodeMapping, on GapModelKey and CodeValue.
 
     PA-4 makes a code unique per gap on (GapKey, GapType, CodeType, CodeSystem, CodeExtension, CodeValue) when
     CodeSystem and CodeValue are set. When the point of care asks for a patient's gaps, cdxp.spGetBulkGaps returns

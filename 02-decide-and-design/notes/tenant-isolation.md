@@ -13,5 +13,5 @@
   - B. Option A, plus a separate encryption key per tenant for PHI.
   - C. A separate database per tenant on one shared schema. This rules out cross-tenant joins.
   - D. Shared tables by default, with separate databases for customers whose contracts require them.
-- **Lean:** A, while keeping D possible. Compliance has to sign off before any table is built.
+- **Lean:** A, while keeping D possible.
 - **Today:** `cdxp` has no row-level security.

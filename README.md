@@ -21,9 +21,9 @@ There are three levels, each more detailed than the last:
 2. **`<phase>/steps.md`** is a checklist for that phase. Each line is one thing that has to happen, or one decision that has to be made.
 3. **`<phase>/notes/*.md`** has one file per step, with bullet-point notes: why it matters, what we know, the options, and the open questions.
 
-Next to the one-page, **[timeline.md](timeline.md)** turns the hours into calendar weeks for 2 or 3 devs per team, with the phases overlapped.
+Next to the one-page, **[timeline.md](timeline.md)** turns the plan into calendar weeks from 2026-11-05, with the phases overlapped and the dates they land on.
 
-The shared data model's draft tables are in **[02-decide-and-design/bulk-tables/](02-decide-and-design/bulk-tables/)**: pseudo-SQL `CREATE TABLE` statements for the `cdxp.Bulk*` tables (member, provider, gap, gap detail, audit log, provider-gap link, feedback, member-provider status, clinical code, gap access, and the quality measure and diagnosis code lookups). Evidence has no tables; it lives in blob storage only. Each column says where it came from (CDXP, C8, or new). They have no constraints or indexes yet. [The shared data model notes](02-decide-and-design/notes/shared-data-model.md) link to each one.
+The shared data model's draft tables are in **[02-decide-and-design/bulk-tables/](02-decide-and-design/bulk-tables/)**: pseudo-SQL `CREATE TABLE` statements for the `cdxp.Bulk*` tables (member, provider, gap, gap detail and feedback, audit log, provider-gap link, member-provider status, clinical code, gap access, and the quality measure and diagnosis code lookups). Evidence has no tables; it lives in blob storage only. Each column says where it came from (CDXP, C8, or new). They have no constraints or indexes yet. [The shared data model notes](02-decide-and-design/notes/shared-data-model.md) link to each one.
 
 ```text
 CDXPC8IntegrationPlan/

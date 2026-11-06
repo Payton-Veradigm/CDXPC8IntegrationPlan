@@ -18,14 +18,13 @@
     - [`cdxp.BulkProviderGap`](../bulk-tables/06-BulkProviderGap.sql): a provider's role on a gap (attributed, PCP, or reporting), with its `cdxp.ProviderGapRole` lookup.
   - **Gaps:**
     - [`cdxp.BulkGap`](../bulk-tables/03-BulkGap.sql): one row per gap: identity, classification, delivery status, and lifecycle.
-    - [`cdxp.BulkGapDetail`](../bulk-tables/05-BulkGapDetail.sql): the gap's content, one row per gap.
+    - [`cdxp.BulkGapDetail`](../bulk-tables/05-BulkGapDetail.sql): the gap's content and its one feedback response (from the PFA, an EHR, or a payer), one row per gap.
     - [`cdxp.BulkGapClinicalCode`](../bulk-tables/09-BulkGapClinicalCode.sql): the gap's codes, one row per code. PA-4 already builds it.
-    - [`cdxp.BulkGapFeedback`](../bulk-tables/07-BulkGapFeedback.sql): every response to a gap, from the PFA, EHRs, and payers.
     - [`cdxp.BulkGapAuditLog`](../bulk-tables/04-BulkGapAuditLog.sql): each change to a gap's status or lifecycle.
     - [`cdxp.BulkGapAccess`](../bulk-tables/10-BulkGapAccess.sql): the provider identifiers a gap is visible under, which decide what Provider SSO users see.
-  - **Reference lookups**, keyed on a clinical code's system and value, and not partitioned:
-    - [`cdxp.QualityMeasure`](../bulk-tables/11-QualityMeasure.sql): a quality measure's names, description, category, and call to action.
-    - [`cdxp.DiagnosisCode`](../bulk-tables/12-DiagnosisCode.sql): an ICD-10 code's description.
+  - **Reference lookups**, CDXP's existing tables, loaded from Snowflake and not partitioned:
+    - [`cdxp.CTADiagCodeMapping`](../bulk-tables/11-CTADiagCodeMapping.sql): a quality measure's names, category, and call to action. Reworked to add payer rows and a description.
+    - [`cdxp.ICDDiagCodeMapping`](../bulk-tables/12-ICDDiagCodeMapping.sql): an ICD-10 code's description and its HCC's, per risk model. Reused as it is, with the view `cdxp.vwDiagnosisCode` for one row per code.
   - **Partitioning:** [`psPartitionByPayerKey`](../bulk-tables/00-PayerPartition.sql), one partition per tenant. PA-4's version replaces it.
   - **Not drafted here:** PA-4's runs and files (`BulkTracker`, `BulkFileDetail`) and its member-site matching tables, in [payer-automation-bulk-tables.md](payer-automation-bulk-tables.md). Evidence has no tables (see **Decided**).
 - **The questions that would simplify it most:**
@@ -35,3 +34,4 @@
 - **Feeds these decisions:** gap identity, member identity, lifecycle, FHIR Publish's replacement, gap types and LOB, column ownership, and PHI.
 - **Must support parity:** the model needs every field that the side-by-side check compares with TRX.
 - **Decided:** evidence (notes, claims, medications, procedures, diagnostics) gets no `Bulk*` tables. It lives in blob storage only (2026-11-02, Payton Obrycki).
+- **Decided:** a gap has one feedback response, kept on `BulkGapDetail`. The PFA, EHRs, and payers all write it, so C8's separate PFA and external feedback go away (2026-11-05, Payton Obrycki).
